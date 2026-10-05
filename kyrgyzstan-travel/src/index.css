@@ -1,0 +1,328 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@theme {
+  --color-graphite: #0B0F12;
+  --color-graphite-card: #141A21;
+  --color-terracotta: #D94E34;
+  --color-terracotta-hover: #C0422D;
+  --color-pine: #1E3F36;
+  --color-gold: #E5A93B;
+  --color-glass: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  --shadow-glow-terracotta: 0 0 40px rgba(217, 78, 52, 0.3);
+  --shadow-glow-gold: 0 0 40px rgba(229, 169, 59, 0.25);
+  --shadow-inner-glass: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  --bg-topo-lines: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0C13.431 0 0 13.431 0 30s13.431 30 30 30 30-13.431 30-30-13.431-30-30-30zm0 4c14.33 0 26 11.67 26 26S44.33 56 30 56 4 44.33 4 30 15.67 4 30 4zm0 4c11.046 0 20 8.954 20 20S41.046 50 30 50 10 41.046 10 30 18.954 10 30 10z' fill='none' stroke='%23ffffff' stroke-width='0.5' stroke-opacity='0.03'/%3E%3C/svg%3E");
+}
+
+@utility glass {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+}
+
+@utility glass-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+@utility btn-primary {
+  background-color: #D94E34;
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s;
+}
+
+@utility btn-secondary {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+@utility btn-ghost {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+
+@utility input-field {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  transition: all 0.3s;
+}
+
+@utility select-field {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  padding-right: 2.5rem;
+  color: white;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 20px;
+  transition: all 0.3s;
+}
+
+@utility badge-pine {
+  background-color: rgba(30, 63, 54, 0.3);
+  color: #1E3F36;
+  border: 1px solid rgba(30, 63, 54, 0.2);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+@utility badge-gold {
+  background-color: rgba(229, 169, 59, 0.2);
+  color: #E5A93B;
+  border: 1px solid rgba(229, 169, 59, 0.3);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+@utility badge-terracotta {
+  background-color: rgba(217, 78, 52, 0.2);
+  color: #D94E34;
+  border: 1px solid rgba(217, 78, 52, 0.3);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+@utility topo-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+@utility gps-coords {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.05em;
+}
+
+@utility elevation {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@utility section-title {
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: white;
+}
+
+@utility section-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.5rem;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@utility animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+@utility animate-slide-down {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+@utility animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+@utility hover-zoom {
+  transition: transform 0.5s ease-out;
+}
+
+@utility gradient-text {
+  background: linear-gradient(to right, white, rgba(255, 255, 255, 0.8), #D94E34);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility gradient-terracotta {
+  background: linear-gradient(to right, #D94E34, #C0422D);
+}
+
+@utility gradient-gold {
+  background: linear-gradient(to right, #E5A93B, #fbbf24);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@layer base {
+  :root {
+    --background: #0B0F12;
+    --foreground: #F5F5F0;
+  }
+
+  * {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0B0F12;
+    color: #F5F5F0;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: var(--bg-topo-lines);
+    background-size: 60px 60px;
+  }
+
+  ::selection {
+    background-color: rgba(217, 78, 52, 0.3);
+    color: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #0B0F12;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(217, 78, 52, 0.5);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #D94E34;
+  }
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2.25rem;
+  }
+}
+
+/* Custom hover styles for utilities */
+.glass-card:hover {
+  border-color: rgba(217, 78, 52, 0.5);
+  box-shadow: 0 0 40px rgba(217, 78, 52, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: #C0422D;
+  box-shadow: 0 0 40px rgba(217, 78, 52, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #D94E34, 0 0 0 4px #0B0F12;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3), 0 0 0 4px #0B0F12;
+}
+
+.btn-ghost:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: rgba(217, 78, 52, 0.5);
+  box-shadow: 0 0 0 2px rgba(217, 78, 52, 0.2);
+}
+
+.select-field:focus {
+  outline: none;
+  border-color: rgba(217, 78, 52, 0.5);
+  box-shadow: 0 0 0 2px rgba(217, 78, 52, 0.2);
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05);
+}

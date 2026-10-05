@@ -1,0 +1,185 @@
+{
+  "nav": {
+    "destinations": "Destinations",
+    "tours": "Tours & Activities",
+    "itineraries": "Itineraries",
+    "services": "Services",
+    "guide": "Guide",
+    "about": "About",
+    "search": "Search",
+    "profile": "Profile"
+  },
+  "hero": {
+    "badge": "New Season 2024 — Book Early & Save 15%",
+    "title": "Discover the Untamed Heart of Central Asia",
+    "subtitle": "From alpine lakes to nomadic yurts, ancient Silk Road caravanserais to towering peaks. Your adventure begins here.",
+    "search": {
+      "region": "Region",
+      "activity": "Activity",
+      "dates": "Dates",
+      "guests": "Guests",
+      "submit": "Plan Your Adventure",
+      "regions": {
+        "issyk-kul": "Issyk-Kul Region",
+        "naryn": "Naryn Region",
+        "osh": "Osh Region",
+        "chuy": "Chuy Region"
+      },
+      "activities": {
+        "trekking": "Trekking & Hiking",
+        "ethno": "Ethno Tourism",
+        "jeep": "Jeep Tours",
+        "horse": "Horse Riding",
+        "cultural": "Cultural Tours"
+      }
+    },
+    "meta": {
+      "coordinates": "42.8746° N, 74.5698° E",
+      "bestSeason": "Best: Jun–Sep",
+      "groupSize": "Group: 2–12"
+    }
+  },
+  "topLocations": {
+    "title": "Top 5 Epic Locations",
+    "subtitle": "Handpicked destinations showcasing the raw beauty and cultural richness of Kyrgyzstan. Each location offers a unique adventure waiting to be discovered.",
+    "exploreAll": "Explore All Destinations",
+    "elevation": "Elevation",
+    "coordinates": "Coordinates",
+    "badges": {
+      "popular": "Popular",
+      "ethno": "Ethno",
+      "scenic": "Scenic",
+      "historic": "Historic",
+      "epic": "Epic"
+    }
+  },
+  "destinationsMap": {
+    "title": "Interactive Regions Map",
+    "subtitle": "Explore Kyrgyzstan's 7 regions. Hover to discover hidden gems and popular spots.",
+    "categories": {
+      "all": "All",
+      "lakes": "Lakes",
+      "gorges": "Gorges",
+      "history": "History",
+      "yurts": "Yurt Camps"
+    },
+    "spots": "spots"
+  },
+  "tours": {
+    "title": "Tours & Activities",
+    "subtitle": "Curated adventures for every type of traveler. From gentle day hikes to extreme mountaineering expeditions.",
+    "viewAll": "View All Tours",
+    "duration": "Duration",
+    "groupSize": "Group size",
+    "difficulty": "Difficulty",
+    "price": "Price",
+    "bookNow": "Book Now",
+    "difficultyLevels": {
+      "easy": "Easy",
+      "light": "Light",
+      "moderate": "Moderate",
+      "challenging": "Challenging",
+      "extreme": "Extreme"
+    }
+  },
+  "booking": {
+    "title": "Book: {{title}}",
+    "confirmed": "Booking Confirmed!",
+    "steps": {
+      "details": "Details",
+      "dates": "Dates",
+      "confirm": "Confirm"
+    },
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "date": "Preferred Start Date",
+      "guests": "Number of Guests",
+      "notes": "Special Requests (Optional)",
+      "notesPlaceholder": "Dietary requirements, accessibility needs, special occasions...",
+      "continue": "Continue",
+      "back": "Back",
+      "review": "Review Booking",
+      "pay": "Pay ${{amount}}",
+      "processing": "Processing...",
+      "terms": "I agree to the Terms & Conditions and Privacy Policy"
+    },
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "phoneRequired": "Phone is required",
+      "dateRequired": "Travel date is required",
+      "dateFuture": "Date must be in the future",
+      "guestsMin": "At least 1 guest required"
+    },
+    "summary": {
+      "tour": "Tour",
+      "date": "Date",
+      "guests": "Guests",
+      "pricePerPerson": "Price per person",
+      "total": "Total"
+    },
+    "success": {
+      "title": "Booking Confirmed!",
+      "message": "We've sent a confirmation email to <strong>{{email}}</strong>. Our team will contact you within 24 hours to finalize details.",
+      "backToTours": "Back to Tours"
+    }
+  },
+  "footer": {
+    "description": "Your gateway to the untamed heart of Central Asia. Authentic adventures, nomadic culture, and breathtaking landscapes.",
+    "company": "Company",
+    "support": "Support",
+    "destinations": "Destinations",
+    "activities": "Activities",
+    "links": {
+      "about": "About Us",
+      "team": "Our Team",
+      "careers": "Careers",
+      "press": "Press",
+      "blog": "Blog",
+      "help": "Help Center",
+      "contact": "Contact Us",
+      "faq": "FAQs",
+      "terms": "Booking Terms",
+      "privacy": "Privacy Policy"
+    },
+    "contact": {
+      "address": "123 Chuy Avenue, Bishkek 720000, Kyrgyz Republic",
+      "phone": "+996 (312) 97-98-98",
+      "email": "hello@kyrgyzstantravel.kg"
+    },
+    "copyright": "© {{year}} Kyrgyzstan Travel. All rights reserved.",
+    "madeWith": "Made with ❤️ in the Tien Shan",
+    "backToTop": "Back to top"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "viewDetails": "View Details",
+    "bookNow": "Book Now",
+    "learnMore": "Learn More",
+    "readMore": "Read More",
+    "showMore": "Show More",
+    "showLess": "Show Less"
+  },
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "kg": "Кыргызча"
+  }
+}
