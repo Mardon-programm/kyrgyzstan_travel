@@ -13,12 +13,9 @@
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "/api/index.py" },
-    { "src": "/admin/(.*)", "dest": "/api/index.py" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "config.settings_vercel",
-    "DEBUG": "False"
-  }
+    { "src": "/api/(.*)", "dest": "api/index.py" },
+    { "src": "/admin/(.*)", "dest": "api/index.py" },
+    { "src": "/assets/(.*)", "dest": "/kyrgyzstan-travel/dist/assets/$1" },
+    { "src": "/(.*)", "dest": "/kyrgyzstan-travel/dist/index.html" }
+  ]
 }
