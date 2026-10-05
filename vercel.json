@@ -5,6 +5,13 @@
   "framework": "vite",
   "builds": [
     {
+      "src": "kyrgyzstan-travel/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
       "src": "api/index.py",
       "use": "@vercel/python"
     }
