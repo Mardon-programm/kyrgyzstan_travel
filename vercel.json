@@ -2,6 +2,12 @@
   "buildCommand": "cd kyrgyzstan-travel && npm run build",
   "outputDirectory": "kyrgyzstan-travel/dist",
   "framework": "vite",
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python@3.12"
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -12,12 +18,6 @@
       "destination": "/index.html"
     }
   ],
-  "functions": {
-    "api/**/*.py": {
-      "runtime": "python@3.12",
-      "maxDuration": 30
-    }
-  },
   "env": {
     "DJANGO_SETTINGS_MODULE": "config.settings_vercel",
     "DEBUG": "False"
