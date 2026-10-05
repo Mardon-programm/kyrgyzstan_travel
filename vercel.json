@@ -4,7 +4,10 @@
     {
       "src": "kyrgyzstan-travel/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+      "config": {
+        "distDir": "dist",
+        "buildCommand": "npm run build"
+      }
     },
     {
       "src": "api/index.py",
@@ -15,7 +18,7 @@
     { "handle": "filesystem" },
     { "src": "/api/(.*)", "dest": "/api/index.py" },
     { "src": "/admin/(.*)", "dest": "/api/index.py" },
-    { "src": "/assets/(.*)", "dest": "/kyrgyzstan-travel/dist/assets/$1" },
-    { "src": "/(.*)", "dest": "/kyrgyzstan-travel/dist/index.html" }
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
