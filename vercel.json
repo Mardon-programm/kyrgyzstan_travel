@@ -9,7 +9,7 @@
       "use": "@vercel/python"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
