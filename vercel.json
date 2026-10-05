@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "buildCommand": "cd kyrgyzstan-travel && npm run build",
   "outputDirectory": "kyrgyzstan-travel/dist",
   "framework": "vite",
