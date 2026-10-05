@@ -3,13 +3,13 @@
   "buildCommand": "cd kyrgyzstan-travel && npm run build",
   "outputDirectory": "kyrgyzstan-travel/dist",
   "framework": "vite",
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+  "functions": {
+    "api/index.py": {
+      "runtime": "python@3.11",
+      "maxDuration": 30
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
