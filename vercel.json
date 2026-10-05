@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "framework": "vite",
-  "buildCommand": "cd kyrgyzstan-travel && npm run build",
-  "outputDirectory": "kyrgyzstan-travel/dist",
   "builds": [
+    {
+      "src": "kyrgyzstan-travel/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
     {
       "src": "api/index.py",
       "use": "@vercel/python"
