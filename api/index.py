@@ -7,7 +7,7 @@ backend_dir = Path(__file__).parent.parent / "backend"
 sys.path.insert(0, str(backend_dir))
 
 # Set Django settings module - use Vercel settings in production
-settings_module = os.environ.get('DJANGO_SETTINGS_MODULE', 'config.settings')
+settings_module = os.environ.get('DJANGO_SETTINGS_MODULE', 'config.settings_vercel')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
 import django
