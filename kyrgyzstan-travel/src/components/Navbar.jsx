@@ -1,21 +1,23 @@
 import { Menu, X, Search, User, Globe, Mountain } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
 import { useSearch } from '../context/SearchContext';
 import { useAuth } from '../context/AuthContext';
 
 const navItems = [
-  { label: 'nav.destinations', href: '/destinations' },
-  { label: 'nav.tours', href: '/tours' },
-  { label: 'nav.itineraries', href: '/itineraries' },
-  { label: 'nav.services', href: '/services' },
-  { label: 'nav.guide', href: '/guide' },
-  { label: 'nav.about', href: '/about' },
+  { key: 'nav.destinations', href: '/destinations' },
+  { key: 'nav.tours', href: '/tours' },
+  { key: 'nav.itineraries', href: '/itineraries' },
+  { key: 'nav.services', href: '/services' },
+  { key: 'nav.guide', href: '/guide' },
+  { key: 'nav.about', href: '/about' },
 ];
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const { t } = useTranslation();
   const { currentLanguage, changeLanguage, languages } = useLanguage();
   const { openSearch } = useSearch();
   const { user, openLogin } = useAuth();
@@ -36,11 +38,11 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
               <a
-                key={item.label}
+                key={item.key}
                 href={item.href}
                 className="text-white/70 hover:text-white font-medium text-sm transition-colors"
               >
-                {item.label}
+                {t(item.key)}
               </a>
             ))}
           </div>
@@ -135,12 +137,12 @@ export default function Navbar() {
           <div className="py-6 space-y-4 animate-slide-down">
             {navItems.map((item) => (
               <a
-                key={item.label}
+                key={item.key}
                 href={item.href}
                 className="block px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/5 font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {item.label}
+                {t(item.key)}
               </a>
             ))}
             <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2">
