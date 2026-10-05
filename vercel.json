@@ -1,0 +1,25 @@
+{
+  "buildCommand": "cd kyrgyzstan-travel && npm run build",
+  "outputDirectory": "kyrgyzstan-travel/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/**/*.py": {
+      "runtime": "python3.11",
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "config.settings_vercel",
+    "DEBUG": "False"
+  }
+}
