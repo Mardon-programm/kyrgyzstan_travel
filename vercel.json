@@ -6,7 +6,7 @@
       "framework": "vite"
     },
     "api": {
-      "root": "api",
+      "root": "backend",
       "framework": "django"
     }
   },
