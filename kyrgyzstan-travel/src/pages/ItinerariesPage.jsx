@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { useItineraries } from '../hooks/useApi';
 
 const difficultyLabels = {
-  easy: 'itineraries.difficulty.easy',
-  moderate: 'itineraries.difficulty.moderate',
-  challenging: 'itineraries.difficulty.challenging',
-  extreme: 'itineraries.difficulty.extreme',
+  easy: 'itineraries.difficultyLevels.easy',
+  moderate: 'itineraries.difficultyLevels.moderate',
+  challenging: 'itineraries.difficultyLevels.challenging',
+  extreme: 'itineraries.difficultyLevels.extreme',
 };
 
 const difficultyIcons = {
@@ -19,7 +19,14 @@ const difficultyIcons = {
 };
 
 export default function ItinerariesPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const getLocalizedText = (item, fallback = '') => {
+    if (!item) return fallback;
+    const lang = i18n.language?.startsWith('ru') ? 'ru' : i18n.language?.startsWith('kg') ? 'kg' : 'en';
+    return item[`title_${lang}`] || item[`name_${lang}`] || item[`short_description_${lang}`] || item[`description_${lang}`] || item.title || item.name || item.short_description || item.description || fallback;
+  };
+
   const [filters, setFilters] = useState({
     region: '',
     category: '',
@@ -223,7 +230,7 @@ export default function ItinerariesPage() {
                   <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                     <div className="flex items-center gap-2 text-white/80 text-sm">
                       <MapPin className="w-4 h-4 text-terracotta" aria-hidden="true" />
-                      <span>{itinerary.regions?.[0]?.name || itinerary.regions?.[0]}</span>
+                      <span>{itinerary.regions?.[0] ? getLocalizedText(itinerary.regions[0], itinerary.regions[0].name) : (itinerary.region?.name || '')}</span>
                     </div>
                   </div>
                 </div>
@@ -231,13 +238,13 @@ export default function ItinerariesPage() {
 
               <div className="p-6 space-y-4">
                 <div>
-                  <p className="text-white/50 text-sm mb-1">{itinerary.categories?.map(c => c.name).join(', ') || t('itineraries.multiCategory')}</p>
+                  <p className="text-white/50 text-sm mb-1">{itinerary.categories?.map(c => getLocalizedText(c, c.name)).join(', ') || t('itineraries.multiCategory')}</p>
                   <h3 className="font-display text-xl font-bold text-white group-hover:text-terracotta transition-colors line-clamp-1">
-                    {itinerary.title}
+                    {getLocalizedText(itinerary, itinerary.title)}
                   </h3>
                 </div>
 
-                <p className="text-white/60 line-clamp-2">{itinerary.short_description}</p>
+                <p className="text-white/60 line-clamp-2">{getLocalizedText({ short_description: itinerary.short_description, short_description_ru: itinerary.short_description_ru, short_description_kg: itinerary.short_description_kg }, itinerary.short_description)}</p>
 
                 <div className="flex flex-wrap items-center gap-4 text-sm text-white/60 border-t border-white/10 pt-4">
                   <div className="flex items-center gap-1.5">

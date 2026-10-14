@@ -7,6 +7,7 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
   const { t } = useTranslation();
   const { createBooking, loading: submitting } = useBookingCreate();
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -35,20 +36,24 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
 
   useEffect(() => {
     if (isOpen) {
+      const fallbackTourDate =
+        tourDate ||
+        (Array.isArray(tour?.next_dates) && tour.next_dates.length > 0 ? tour.next_dates[0] : null) ||
+        (Array.isArray(tour?.dates) && tour.dates.length > 0 ? tour.dates[0] : null);
       setStep(1);
       setFormData({
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
-        date: tourDate?.start_date || '',
+        date: fallbackTourDate?.start_date || '',
         guests: 2,
         notes: '',
       });
       setErrors({});
       setSubmitSuccess(false);
     }
-  }, [isOpen, tourDate]);
+  }, [isOpen, tour, tourDate]);
 
   const validateStep = (currentStep) => {
     const newErrors = {};
@@ -82,10 +87,19 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
     e.preventDefault();
     if (!validateStep(2)) return;
 
+    const activeTourDate =
+      tourDate ||
+      (Array.isArray(tour?.next_dates) && tour.next_dates.length > 0 ? tour.next_dates[0] : null) ||
+      (Array.isArray(tour?.dates) && tour.dates.length > 0 ? tour.dates[0] : null);
+    if (!activeTourDate?.id) {
+      setErrors({ date: t('booking.validation.dateRequired') });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const bookingData = {
-        tour_date: tourDate?.id,
+        tour_date: activeTourDate.id,
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,
@@ -360,10 +374,10 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
                       <button type="button" onClick={handleBack} className="btn-secondary flex-1">{t('booking.form.back')}</button>
                       <button
                         type="submit"
-                        disabled={submitting}
+                        disabled={submitting || isSubmitting}
                         className="btn-primary flex-1 flex items-center justify-center gap-2"
                       >
-                        {submitting ? (
+                        {submitting || isSubmitting ? (
                           <>
                             <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
                             {t('booking.form.processing')}

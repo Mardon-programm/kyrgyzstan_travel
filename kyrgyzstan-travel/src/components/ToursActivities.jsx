@@ -131,7 +131,7 @@ export default function ToursActivities() {
                     <span className="text-white/50">/{tour.currency}</span>
                   </div>
                   <button
-                    onClick={() => openBooking(tour)}
+                    onClick={() => openBooking(tour, tour.next_dates?.[0])}
                     className="btn-primary px-5 py-2.5 text-sm"
                   >
                     {t('tours.bookNow')}

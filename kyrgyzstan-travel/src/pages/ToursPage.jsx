@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Calendar, Users, MapPin, Filter, ChevronDown, X } from 'lucide-react';
+import { Calendar, Users, MapPin, Filter, ChevronDown, X, Star, ArrowRight } from 'lucide-react';
 import { useTours } from '../hooks/useApi';
 import { useBooking } from '../context/BookingContext';
 
@@ -13,8 +13,14 @@ const difficultyLabels = {
 };
 
 export default function ToursPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { openBooking } = useBooking();
+  const getLocalizedText = (item, fallback = '') => {
+    if (!item) return fallback;
+    const lang = i18n.language?.startsWith('ru') ? 'ru' : i18n.language?.startsWith('kg') ? 'kg' : 'en';
+    const val = lang === 'ru' ? item.title_ru || item.name_ru || item.title || item.name : lang === 'kg' ? item.title_kg || item.name_kg || item.title || item.name : item.title || item.name;
+    return val || fallback;
+  };
   const [filters, setFilters] = useState({
     category: '',
     region: '',
@@ -208,9 +214,9 @@ export default function ToursPage() {
 
               <div className="p-6 space-y-4">
                 <div>
-                  <p className="text-white/50 text-sm mb-1">{tour.region?.name || tour.region}</p>
+                  <p className="text-white/50 text-sm mb-1">{getLocalizedText(tour.region, tour.region?.name || tour.region)}</p>
                   <h3 className="font-display text-xl font-bold text-white group-hover:text-terracotta transition-colors line-clamp-1">
-                    {tour.title}
+                    {getLocalizedText(tour, tour.title)}
                   </h3>
                 </div>
 
@@ -235,7 +241,7 @@ export default function ToursPage() {
                     <span className="text-white/50">/{tour.currency}</span>
                   </div>
                   <button
-                    onClick={() => openBooking(tour)}
+                    onClick={() => openBooking(tour, tour.next_dates?.[0])}
                     className="btn-primary px-5 py-2.5 text-sm"
                   >
                     {t('tours.bookNow')}

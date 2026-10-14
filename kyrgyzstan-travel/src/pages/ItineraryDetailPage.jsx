@@ -4,15 +4,21 @@ import { Calendar, Users, MapPin, Star, ArrowLeft, Check, ArrowRight, Mountain, 
 import { useItinerary } from '../hooks/useApi';
 
 const difficultyLabels = {
-  easy: 'itineraries.difficulty.easy',
-  moderate: 'itineraries.difficulty.moderate',
-  challenging: 'itineraries.difficulty.challenging',
-  extreme: 'itineraries.difficulty.extreme',
+  easy: 'itineraries.difficultyLevels.easy',
+  moderate: 'itineraries.difficultyLevels.moderate',
+  challenging: 'itineraries.difficultyLevels.challenging',
+  extreme: 'itineraries.difficultyLevels.extreme',
 };
 
 export default function ItineraryDetailPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { slug } = useParams();
+
+  const getLocalizedText = (item, fallback = '') => {
+    if (!item) return fallback;
+    const lang = i18n.language?.startsWith('ru') ? 'ru' : i18n.language?.startsWith('kg') ? 'kg' : 'en';
+    return item[`title_${lang}`] || item[`name_${lang}`] || item[`short_description_${lang}`] || item[`description_${lang}`] || item.title || item.name || item.short_description || item.description || fallback;
+  };
 
   const { data: itinerary, loading, error } = useItinerary(slug);
 
@@ -80,10 +86,12 @@ export default function ItineraryDetailPage() {
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           <div className="lg:col-span-2 space-y-8">
             <div>
-              <p className="text-white/50 text-sm mb-2">{itinerary.regions?.map(r => r.name).join(', ')}</p>
-              <h1 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">{itinerary.title}</h1>
-              {itinerary.title_kg && <h2 className="text-xl text-white/70 mb-4 font-medium">{itinerary.title_kg}</h2>}
-              <p className="text-white/70 text-lg leading-relaxed">{itinerary.description || itinerary.short_description}</p>
+              <p className="text-white/50 text-sm mb-2">{itinerary.regions?.map((r) => getLocalizedText(r, r.name)).join(', ')}</p>
+              <h1 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">{getLocalizedText(itinerary, itinerary.title)}</h1>
+              {(itinerary.title_kg || itinerary.title_ru) && (
+                <h2 className="text-xl text-white/70 mb-4 font-medium">{i18n.language?.startsWith('kg') ? (itinerary.title_kg || itinerary.title_ru || itinerary.title) : (itinerary.title_ru || itinerary.title_kg || itinerary.title)}</h2>
+              )}
+              <p className="text-white/70 text-lg leading-relaxed">{getLocalizedText({ description: itinerary.description, description_ru: itinerary.description_ru, description_kg: itinerary.description_kg, short_description: itinerary.short_description, short_description_ru: itinerary.short_description_ru, short_description_kg: itinerary.short_description_kg }, itinerary.description || itinerary.short_description)}</p>
             </div>
 
             <div className="border-t border-white/10 pt-8">
@@ -275,7 +283,7 @@ export default function ItineraryDetailPage() {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-white/60">{t('itineraries.regions')}</span>
-                    <span className="text-white font-medium">{itinerary.regions?.map(r => r.name).join(', ')}</span>
+                    <span className="text-white font-medium">{itinerary.regions?.map((r) => getLocalizedText(r, r.name)).join(', ')}</span>
                   </div>
                 </div>
 

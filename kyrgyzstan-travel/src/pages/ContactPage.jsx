@@ -16,11 +16,11 @@ export default function ContactPage() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email format';
-    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    if (!formData.name.trim()) newErrors.name = t('contact.validation.nameRequired');
+    if (!formData.email.trim()) newErrors.email = t('contact.validation.emailRequired');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = t('contact.validation.emailInvalid');
+    if (!formData.subject.trim()) newErrors.subject = t('contact.validation.subjectRequired');
+    if (!formData.message.trim()) newErrors.message = t('contact.validation.messageRequired');
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -33,51 +33,50 @@ export default function ContactPage() {
     setSubmitError('');
 
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       setStatus('error');
-      setSubmitError('Failed to send message. Please try again.');
+      setSubmitError(t('contact.errorMessage'));
     }
   };
 
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Visit Us',
-      details: '123 Chuy Avenue, Bishkek 720000, Kyrgyz Republic',
+      title: t('contact.visit'),
+      details: t('contact.address'),
       href: 'https://maps.google.com',
     },
     {
       icon: Phone,
-      title: 'Call Us',
-      details: '+996 (312) 97-98-98',
+      title: t('contact.call'),
+      details: t('contact.phone'),
       href: 'tel:+996312979898',
     },
     {
       icon: Mail,
-      title: 'Email Us',
-      details: 'hello@kyrgyzstantravel.kg',
+      title: t('contact.email'),
+      details: t('contact.emailAddress'),
       href: 'mailto:hello@kyrgyzstantravel.kg',
     },
     {
       icon: Clock,
-      title: 'Office Hours',
-      details: 'Mon–Fri: 9:00–18:00 (GMT+6)\nSat: 10:00–14:00\nSun: Closed',
+      title: t('contact.hours'),
+      details: t('contact.officeHoursDetail'),
       href: null,
     },
   ];
 
   const subjects = [
-    { value: 'general', label: 'General Inquiry' },
-    { value: 'booking', label: 'Booking Question' },
-    { value: 'custom', label: 'Custom Tour Request' },
-    { value: 'partnership', label: 'Partnership' },
-    { value: 'press', label: 'Press & Media' },
-    { value: 'careers', label: 'Careers' },
-    { value: 'other', label: 'Other' },
+    { value: 'general', label: t('contact.subjects.general') },
+    { value: 'booking', label: t('contact.subjects.booking') },
+    { value: 'custom', label: t('contact.subjects.custom') },
+    { value: 'partnership', label: t('contact.subjects.partnership') },
+    { value: 'press', label: t('contact.subjects.press') },
+    { value: 'careers', label: t('contact.subjects.careers') },
+    { value: 'other', label: t('contact.subjects.other') },
   ];
 
   return (
@@ -91,8 +90,8 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-graphite/90 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
           <div className="max-w-7xl mx-auto text-center">
-            <h1 className="font-display text-4xl sm:text-5xl font-bold text-white mb-4">Contact Us</h1>
-            <p className="text-white/70 text-lg max-w-3xl mx-auto">Have questions? We'd love to hear from you. Our team typically responds within 24 hours.</p>
+            <h1 className="font-display text-4xl sm:text-5xl font-bold text-white mb-4">{t('contact.title')}</h1>
+            <p className="text-white/70 text-lg max-w-3xl mx-auto">{t('contact.subtitle')}</p>
           </div>
         </div>
       </section>
@@ -110,7 +109,7 @@ export default function ContactPage() {
                   <p className="text-white/70 whitespace-pre-line">{item.details}</p>
                   {item.href && (
                     <a href={item.href} className="inline-flex items-center gap-1 text-terracotta hover:underline text-sm mt-2">
-                      {t('contact.visit')} <span className="w-4 h-4" aria-hidden="true">→</span>
+                      {t('contact.visitLink')} <span className="w-4 h-4" aria-hidden="true">→</span>
                     </a>
                   )}
                 </div>
@@ -141,7 +140,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                     <div>
-                      <label htmlFor="name" className="block text-xs font-medium text-white/50 mb-1.5">{t('contact.name')}</label>
+                      <label htmlFor="name" className="block text-xs font-medium text-white/50 mb-1.5">{t('contact.fields.name')}</label>
                       <input
                         id="name"
                         type="text"
@@ -155,7 +154,7 @@ export default function ContactPage() {
                       {errors.name && <p id="name-error" className="text-terracotta text-xs mt-1" role="alert">{errors.name}</p>}
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-xs font-medium text-white/50 mb-1.5">{t('contact.email')}</label>
+                      <label htmlFor="email" className="block text-xs font-medium text-white/50 mb-1.5">{t('contact.fields.email')}</label>
                       <input
                         id="email"
                         type="email"

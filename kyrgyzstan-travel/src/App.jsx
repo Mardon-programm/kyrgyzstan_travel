@@ -11,6 +11,7 @@ import TopLocations from './components/TopLocations';
 import DestinationsMap from './components/DestinationsMap';
 import ToursActivities from './components/ToursActivities';
 import BookingModal from './components/BookingModal';
+import SearchModal from './components/SearchModal';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ToursPage from './pages/ToursPage';
@@ -65,6 +66,7 @@ function App() {
                   </main>
                   <Footer />
                   <BookingModal />
+                  <SearchModal />
                 </div>
               </BrowserRouter>
             </AuthProvider>

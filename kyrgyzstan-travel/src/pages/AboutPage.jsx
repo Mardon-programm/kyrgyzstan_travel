@@ -25,19 +25,40 @@ const team = [
 export default function AboutPage() {
   const { t } = useTranslation();
 
+  const stats = [
+    { icon: Mountain, label: t('about.stats.destinations'), value: '50+' },
+    { icon: Users, label: t('about.stats.travelers'), value: '10,000+' },
+    { icon: Heart, label: t('about.stats.partners'), value: '200+' },
+    { icon: Award, label: t('about.stats.experience'), value: '15+' },
+  ];
+
+  const values = [
+    { icon: Shield, title: t('about.values.safety.title'), description: t('about.values.safety.description') },
+    { icon: Heart, title: t('about.values.authentic.title'), description: t('about.values.authentic.description') },
+    { icon: Globe, title: t('about.values.sustainable.title'), description: t('about.values.sustainable.description') },
+    { icon: Award, title: t('about.values.guides.title'), description: t('about.values.guides.description') },
+  ];
+
+  const team = [
+    { name: t('about.team.aiperi.name'), role: t('about.team.aiperi.role'), bio: t('about.team.aiperi.bio') },
+    { name: t('about.team.bakytbek.name'), role: t('about.team.bakytbek.role'), bio: t('about.team.bakytbek.bio') },
+    { name: t('about.team.meerim.name'), role: t('about.team.meerim.role'), bio: t('about.team.meerim.bio') },
+    { name: t('about.team.nurlanbek.name'), role: t('about.team.nurlanbek.role'), bio: t('about.team.nurlanbek.bio') },
+  ];
+
   return (
     <div className="bg-graphite min-h-screen">
       <section className="relative aspect-[16/9] max-w-7xl mx-auto">
         <img
           src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80"
-          alt="Kyrgyzstan mountains"
+          alt={t('about.heroAlt')}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-graphite/90 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
           <div className="max-w-7xl mx-auto text-center">
-            <h1 className="font-display text-4xl sm:text-5xl font-bold text-white mb-4">About Kyrgyzstan Travel</h1>
-            <p className="text-white/70 text-lg max-w-3xl mx-auto">Your gateway to the untamed heart of Central Asia</p>
+            <h1 className="font-display text-4xl sm:text-5xl font-bold text-white mb-4">{t('about.heroTitle')}</h1>
+            <p className="text-white/70 text-lg max-w-3xl mx-auto">{t('about.heroSubtitle')}</p>
           </div>
         </div>
       </section>
@@ -45,32 +66,20 @@ export default function AboutPage() {
       <section className="py-20 lg:py-32 bg-graphite">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="section-title mb-4">Our Story</h2>
-            <p className="section-subtitle mx-auto">Founded in 2009 by a group of passionate Kyrgyz mountaineers and cultural enthusiasts</p>
+            <h2 className="section-title mb-4">{t('about.storyTitle')}</h2>
+            <p className="section-subtitle mx-auto">{t('about.storySubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div className="space-y-6 text-white/70 leading-relaxed">
-              <p>
-                Kyrgyzstan Travel was born from a simple idea: to share the incredible beauty of our homeland with the world.
-                What started as a small group of friends guiding visitors to Ala-Archa gorge has grown into the country's
-                leading adventure tourism company.
-              </p>
-              <p>
-                We believe that travel should be transformative. Every journey we design connects you with the raw nature,
-                ancient traditions, and warm hospitality that make Kyrgyzstan unique. From the shores of Issyk-Kul to the
-                high pastures of Son-Kul, from the Silk Road caravanserais to the nomadic yurts of Naryn — we know every
-                trail, every family, every hidden gem.
-              </p>
-              <p>
-                Today, our team of 50+ local experts continues this mission. We're not just tour operators — we're
-                ambassadors of Kyrgyz culture, guardians of the mountains, and your partners in adventure.
-              </p>
+              <p>{t('about.storyP1')}</p>
+              <p>{t('about.storyP2')}</p>
+              <p>{t('about.storyP3')}</p>
             </div>
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80"
-                alt="Kyrgyzstan Travel team"
+                alt={t('about.teamAlt')}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -89,8 +98,8 @@ export default function AboutPage() {
           </div>
 
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="section-title mb-4">Our Values</h2>
-            <p className="section-subtitle mx-auto">The principles that guide every journey we create</p>
+            <h2 className="section-title mb-4">{t('about.valuesTitle')}</h2>
+            <p className="section-subtitle mx-auto">{t('about.valuesSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -110,8 +119,8 @@ export default function AboutPage() {
       <section className="py-20 lg:py-32 bg-graphite-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="section-title mb-4">Meet Our Team</h2>
-            <p className="section-subtitle mx-auto">Local experts who make your adventure unforgettable</p>
+            <h2 className="section-title mb-4">{t('about.teamTitle')}</h2>
+            <p className="section-subtitle mx-auto">{t('about.teamSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -131,10 +140,10 @@ export default function AboutPage() {
 
       <section className="py-20 lg:py-32 bg-graphite text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="section-title mb-4">Ready for Your Adventure?</h2>
-          <p className="section-subtitle mx-auto mb-8">Let us help you discover the untamed heart of Central Asia</p>
+          <h2 className="section-title mb-4">{t('about.ctaTitle')}</h2>
+          <p className="section-subtitle mx-auto mb-8">{t('about.ctaSubtitle')}</p>
           <a href="/tours" className="btn-primary inline-flex items-center gap-2 text-lg px-8 py-4">
-            Explore Tours
+            {t('about.ctaButton')}
             <span className="w-5 h-5" aria-hidden="true">→</span>
           </a>
         </div>

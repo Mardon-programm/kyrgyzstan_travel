@@ -13,7 +13,7 @@ export default function BookingPage() {
 
   useEffect(() => {
     if (tour) {
-      openBooking(tour);
+      openBooking(tour, tour.next_dates?.[0] || tour.dates?.[0]);
     } else {
       closeBooking();
     }

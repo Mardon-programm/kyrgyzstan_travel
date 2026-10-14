@@ -4,8 +4,14 @@ import { Filter, ChevronDown, X, BookOpen, HelpCircle, Search, ChevronRight, Che
 import { useGuideCategories, useGuideArticles, useFAQs } from '../hooks/useApi';
 
 export default function GuidePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState('articles');
+  const getLocalizedText = (item, fallback = '') => {
+    if (!item) return fallback;
+    const lang = i18n.language?.startsWith('ru') ? 'ru' : i18n.language?.startsWith('kg') ? 'kg' : 'en';
+    const value = lang === 'ru' ? item.title_ru || item.name_ru || item.question_ru || item.answer_ru || item.title || item.name || item.question || item.answer : lang === 'kg' ? item.title_kg || item.name_kg || item.question_kg || item.answer_kg || item.title || item.name || item.question || item.answer : item.title || item.name || item.question || item.answer;
+    return value || fallback;
+  };
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -106,7 +112,7 @@ export default function GuidePage() {
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${selectedCategory === cat.slug ? 'bg-terracotta text-white' : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'}`}
               >
                 {cat.icon && <span className="mr-1" data-lucide={cat.icon} />}
-                {cat.name}
+                {getLocalizedText(cat, cat.name)}
               </button>
             ))}
           </div>
@@ -155,7 +161,7 @@ export default function GuidePage() {
                       <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                         {article.category && (
                           <span className="px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur text-white/90 text-xs border border-white/20">
-                            {article.category.name}
+                            {getLocalizedText(article.category, article.category.name)}
                           </span>
                         )}
                         {article.is_featured && (
@@ -178,12 +184,12 @@ export default function GuidePage() {
                     </div>
                     <div className="p-6 space-y-3">
                       {article.category && (
-                        <span className="px-2 py-1 rounded bg-terracotta/20 text-terracotta text-xs">{article.category.name}</span>
+                        <span className="px-2 py-1 rounded bg-terracotta/20 text-terracotta text-xs">{getLocalizedText(article.category, article.category.name)}</span>
                       )}
                       <h3 className="font-display text-lg font-bold text-white group-hover:text-terracotta transition-colors line-clamp-2">
-                        {article.title}
+                        {getLocalizedText(article, article.title)}
                       </h3>
-                      <p className="text-white/60 text-sm line-clamp-2">{article.excerpt}</p>
+                      <p className="text-white/60 text-sm line-clamp-2">{getLocalizedText({ title: article.excerpt, title_ru: article.excerpt_ru, title_kg: article.excerpt_kg }, article.excerpt)}</p>
                       <div className="flex items-center justify-between pt-2 border-t border-white/10">
                         <div className="flex items-center gap-2 text-xs text-white/50">
                           <Tag className="w-3 h-3" />
@@ -216,7 +222,7 @@ export default function GuidePage() {
                       className="w-full p-6 flex items-center justify-between text-left"
                     >
                       <div className="flex-1 pr-4">
-                        <p className="font-medium text-white text-lg">{faq.question}</p>
+                        <p className="font-medium text-white text-lg">{getLocalizedText(faq, faq.question)}</p>
                       </div>
                       <ChevronDownIcon
                         className={`w-5 h-5 text-white/50 transition-transform ${expandedFAQ === faq.id ? 'rotate-180' : ''}`}
@@ -225,7 +231,7 @@ export default function GuidePage() {
                     </button>
                     {expandedFAQ === faq.id && (
                       <div className="border-t border-white/10 px-6 pb-6">
-                        <p className="text-white/70">{faq.answer}</p>
+                        <p className="text-white/70">{getLocalizedText({ title: faq.answer, title_ru: faq.answer_ru, title_kg: faq.answer_kg }, faq.answer)}</p>
                       </div>
                     )}
                   </div>

@@ -14,8 +14,14 @@ const difficultyLabels = {
 };
 
 export default function TourDetailPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { slug } = useParams();
+  const getLocalizedText = (item, fallback = '') => {
+    if (!item) return fallback;
+    const lang = i18n.language?.startsWith('ru') ? 'ru' : i18n.language?.startsWith('kg') ? 'kg' : 'en';
+    const value = lang === 'ru' ? item.title_ru || item.name_ru || item.title || item.name : lang === 'kg' ? item.title_kg || item.name_kg || item.title || item.name : item.title || item.name;
+    return value || fallback;
+  };
   const { openBooking } = useBooking();
   const [activeTab, setActiveTab] = useState('overview');
   const [expandedDay, setExpandedDay] = useState(null);
@@ -82,9 +88,9 @@ export default function TourDetailPage() {
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           <div className="lg:col-span-2 space-y-8">
             <div>
-              <p className="text-white/50 text-sm mb-2">{tour.region?.name || tour.region}</p>
-              <h1 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">{tour.title}</h1>
-              <p className="text-white/70 text-lg leading-relaxed">{tour.description || tour.short_description}</p>
+              <p className="text-white/50 text-sm mb-2">{getLocalizedText(tour.region, tour.region?.name || tour.region)}</p>
+              <h1 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">{getLocalizedText(tour, tour.title)}</h1>
+              <p className="text-white/70 text-lg leading-relaxed">{getLocalizedText({ title: tour.description || tour.short_description, title_ru: tour.description_ru || tour.short_description_ru, title_kg: tour.description_kg || tour.short_description_kg }, tour.description || tour.short_description)}</p>
             </div>
 
             <div className="border-t border-white/10 pt-8">

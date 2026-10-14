@@ -1,4 +1,5 @@
 {
+  "brand": "Kyrgyzstan",
   "nav": {
     "destinations": "Destinations",
     "tours": "Tours & Activities",
@@ -130,7 +131,7 @@
     }
   },
   "footer": {
-    "description": "Your gateway to the untamed heart of Central Asia. Authentic adventures, nomadic culture, and breathtaking landscapes.",
+    "description": "Discover unforgettable journeys through Kyrgyzstan's mountains, culture, and wild landscapes.",
     "company": "Company",
     "support": "Support",
     "destinations": "Destinations",
@@ -152,7 +153,7 @@
       "phone": "+996 (312) 97-98-98",
       "email": "hello@kyrgyzstantravel.kg"
     },
-    "copyright": "© {{year}} Kyrgyzstan Travel. All rights reserved.",
+    "copyright": "© {{year}} Kyrgyzstan. All rights reserved.",
     "madeWith": "Made with ❤️ in the Tien Shan",
     "backToTop": "Back to top"
   },
@@ -175,7 +176,264 @@
     "learnMore": "Learn More",
     "readMore": "Read More",
     "showMore": "Show More",
-    "showLess": "Show Less"
+    "showLess": "Show Less",
+    "all": "All",
+    "allRegions": "All regions",
+    "allCategories": "All categories",
+    "region": "Region",
+    "category": "Category",
+    "people": "People",
+    "reviews": "Reviews",
+    "back": "Back",
+    "featured": "Featured",
+    "days": "days",
+    "noResults": "No results found",
+    "from": "from",
+    "perDay": "per day",
+    "perNight": "per night",
+    "perPerson": "per person"
+  },
+  "regions": {
+    "issyk-kul": "Issyk-Kul",
+    "naryn": "Naryn",
+    "osh": "Osh",
+    "chuy": "Chuy",
+    "talas": "Talas",
+    "jalal-abad": "Jalal-Abad",
+    "batken": "Batken"
+  },
+  "categories": {
+    "trekking": "Trekking",
+    "horse": "Horse Riding",
+    "jeep": "Jeep Tours",
+    "cultural": "Cultural Tours",
+    "mountaineering": "Mountaineering",
+    "ethno": "Ethno Tourism"
+  },
+  "about": {
+    "heroTitle": "About Kyrgyzstan",
+    "heroSubtitle": "The untamed heart of Central Asia",
+    "heroAlt": "Kyrgyzstan mountains",
+    "storyTitle": "Our Story",
+    "storySubtitle": "Founded in 2009 by a group of passionate Kyrgyz mountaineers and cultural enthusiasts",
+    "storyP1": "Kyrgyzstan was born from a simple idea: to share the incredible beauty of our homeland with the world. What started as a small group of friends guiding visitors to Ala-Archa gorge has grown into a trusted adventure tourism experience.",
+    "storyP2": "We believe that travel should be transformative. Every journey we design connects you with the raw nature, ancient traditions, and warm hospitality that make Kyrgyzstan unique. From the shores of Issyk-Kul to the high pastures of Son-Kul, from the Silk Road caravanserais to the nomadic yurts of Naryn — we know every trail, every family, every hidden gem.",
+    "storyP3": "Today, our team of 50+ local experts continues this mission. We're not just tour operators — we're ambassadors of Kyrgyz culture, guardians of the mountains, and your partners in adventure.",
+    "teamAlt": "Kyrgyzstan team",
+    "stats": {
+      "destinations": "Destinations",
+      "travelers": "Happy Travelers",
+      "partners": "Local Partners",
+      "experience": "Years Experience"
+    },
+    "valuesTitle": "Our Values",
+    "valuesSubtitle": "The principles that guide every journey we create",
+    "values": {
+      "safety": {
+        "title": "Safety First",
+        "description": "Your safety is our top priority. All tours are led by certified guides with extensive local knowledge."
+      },
+      "authentic": {
+        "title": "Authentic Experiences",
+        "description": "We connect you with local communities for genuine cultural immersion, not tourist traps."
+      },
+      "sustainable": {
+        "title": "Sustainable Tourism",
+        "description": "We practice responsible tourism that preserves nature and supports local economies."
+      },
+      "guides": {
+        "title": "Expert Guides",
+        "description": "Our guides are locals who know every trail, story, and hidden gem of Kyrgyzstan."
+      }
+    },
+    "teamTitle": "Meet Our Team",
+    "teamSubtitle": "Local experts who make your adventure unforgettable",
+    "team": {
+      "aiperi": {
+        "name": "Aiperi Toktogulova",
+        "role": "Founder & CEO",
+        "bio": "Born in Bishkek, Aiperi has 15+ years in adventure tourism across Central Asia."
+      },
+      "bakytbek": {
+        "name": "Bakytbek Mamytov",
+        "role": "Head Guide",
+        "bio": "Certified mountain guide with 50+ expeditions to peaks over 7000m."
+      },
+      "meerim": {
+        "name": "Meerim Asanova",
+        "role": "Operations Manager",
+        "bio": "Ensures every detail of your journey is perfect, from airport pickup to mountain summit."
+      },
+      "nurlanbek": {
+        "name": "Nurlanbek Uulu",
+        "role": "Cultural Coordinator",
+        "bio": "Connects travelers with nomadic families for authentic yurt stays and cultural exchanges."
+      }
+    },
+    "ctaTitle": "Ready for Your Adventure?",
+    "ctaSubtitle": "Let us help you discover the untamed heart of Central Asia",
+    "ctaButton": "Explore Tours"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions? We'd love to hear from you. Our team typically responds within 24 hours.",
+    "visit": "Visit Us",
+    "call": "Call Us",
+    "email": "Email Us",
+    "hours": "Office Hours",
+    "address": "123 Chuy Avenue, Bishkek 720000, Kyrgyz Republic",
+    "phone": "+996 (312) 97-98-98",
+    "emailAddress": "hello@kyrgyzstantravel.kg",
+    "officeHoursDetail": "Mon–Fri: 9:00–18:00 (GMT+6)\nSat: 10:00–14:00\nSun: Closed",
+    "visitLink": "Visit",
+    "sendMessage": "Send us a message",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message"
+    },
+    "name": "Name",
+    "emailLabel": "Email",
+    "subject": "Subject",
+    "selectSubject": "Select a subject",
+    "message": "Message",
+    "messagePlaceholder": "Tell us about your trip plans...",
+    "send": "Send message",
+    "sending": "Sending...",
+    "successTitle": "Message sent",
+    "successMessage": "Thank you! Your message has been received and our team will reply soon.",
+    "errorMessage": "Failed to send message. Please try again.",
+    "faq": "Frequently asked questions",
+    "faqSubtitle": "Helpful answers before you plan your journey.",
+    "subjects": {
+      "general": "General Inquiry",
+      "booking": "Booking Question",
+      "custom": "Custom Tour Request",
+      "partnership": "Partnership",
+      "press": "Press & Media",
+      "careers": "Careers",
+      "other": "Other"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "subjectRequired": "Subject is required",
+      "messageRequired": "Message is required"
+    },
+    "faq1": {
+      "q": "How far in advance should I book?",
+      "a": "We recommend booking at least 2–4 weeks in advance for peak season trips, especially for popular itineraries and group departures."
+    },
+    "faq2": {
+      "q": "Can you help with a custom itinerary?",
+      "a": "Absolutely. We design custom tours for families, photographers, adventure groups, and private travelers based on your interests and schedule."
+    },
+    "faq3": {
+      "q": "Do you arrange transportation and guides?",
+      "a": "Yes. We can coordinate airport transfers, local drivers, certified guides, and logistics for the full trip experience."
+    },
+    "faq4": {
+      "q": "Is it possible to travel independently?",
+      "a": "Yes. We can provide self-drive routes, private transfers, and local support while still helping you plan every key stop and overnight stay."
+    }
+  },
+  "guide": {
+    "title": "Travel Guide",
+    "subtitle": "Practical tips, local stories and useful travel insights.",
+    "articles": "Articles",
+    "faqs": "FAQs",
+    "searchPlaceholder": "Search tips or articles",
+    "allCategories": "All categories",
+    "noArticles": "No articles found",
+    "noFAQs": "No FAQs found",
+    "minRead": "min read",
+    "readMore": "Read more"
+  },
+  "itineraries": {
+    "title": "Itineraries",
+    "subtitle": "Handpicked routes across Kyrgyzstan.",
+    "difficulty": "Difficulty",
+    "days": "days",
+    "from": "from",
+    "highlights": "Highlights",
+    "details": "Trip details",
+    "multiCategory": "Multiple categories",
+    "duration": "Duration",
+    "priceFrom": "Price from",
+    "regions": "Regions",
+    "perPerson": "per person",
+    "bookNow": "Book now",
+    "viewDetails": "View details",
+    "backToItineraries": "Back to itineraries",
+    "difficultyLevels": {
+      "easy": "Easy",
+      "moderate": "Moderate",
+      "challenging": "Challenging",
+      "extreme": "Extreme"
+    }
+  },
+  "services": {
+    "title": "Travel Services",
+    "subtitle": "Verified guides, transport and authentic stays.",
+    "guides": "Guides",
+    "vehicles": "Vehicles",
+    "yurtCamps": "Yurt camps",
+    "verified": "Verified",
+    "featured": "Featured",
+    "cbt": "CBT",
+    "yearsExp": "years experience",
+    "seats": "seats",
+    "guests": "guests",
+    "perDay": "per day",
+    "perNight": "per night",
+    "perPerson": "per person",
+    "viewProfile": "View profile"
+  },
+  "destinations": {
+    "title": "Destinations",
+    "subtitle": "Discover the country’s most inspiring places.",
+    "highlights": "Highlights"
+  },
+  "events": {
+    "title": "Events",
+    "subtitle": "Festivals, culture and seasonal experiences.",
+    "viewDetails": "View details",
+    "details": "Event details",
+    "dates": "Dates",
+    "time": "Time",
+    "location": "Location",
+    "price": "Price",
+    "free": "Free",
+    "organizer": "Organizer",
+    "visitWebsite": "Visit website",
+    "upcoming": "Upcoming",
+    "ongoing": "Ongoing",
+    "ended": "Ended"
+  },
+  "reviews": {
+    "title": "Traveler Reviews",
+    "subtitle": "What our guests say about their journeys.",
+    "type": "Type",
+    "types": {
+      "tour": "Tour",
+      "destination": "Destination",
+      "guide": "Guide",
+      "general": "General"
+    }
+  },
+  "notfound": {
+    "title": "Page not found",
+    "message": "The page you are looking for does not exist.",
+    "backHome": "Back home"
+  },
+  "search": {
+    "title": "Search trips and inspiration",
+    "placeholder": "Search destinations, tours, guides and articles",
+    "submit": "Search",
+    "quickLinks": "Quick links",
+    "noResults": "No matching results found"
   },
   "languages": {
     "en": "English",
