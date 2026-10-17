@@ -191,7 +191,9 @@
     "from": "башталып",
     "perDay": "күңүнө",
     "perNight": "түнүнө",
-    "perPerson": "адамга"
+    "perPerson": "адамга",
+    "backToDestinations": "Багыттарга кайтуу",
+    "backToItineraries": "Маршруттарга кайтуу"
   },
   "regions": {
     "issyk-kul": "Ысык-Көл",

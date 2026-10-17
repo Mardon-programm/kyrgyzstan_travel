@@ -190,9 +190,10 @@
     "noResults": "No results found",
     "from": "from",
     "perDay": "per day",
-    "perNight": "per night",
+"perNight": "per night",
     "perPerson": "per person",
-    "backToDestinations": "Back to destinations"
+    "backToDestinations": "Back to destinations",
+    "backToItineraries": "Back to itineraries"
   },
   "regions": {
     "issyk-kul": "Issyk-Kul",

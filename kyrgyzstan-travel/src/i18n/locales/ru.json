@@ -191,7 +191,9 @@
     "from": "от",
     "perDay": "в день",
     "perNight": "в ночь",
-    "perPerson": "с человека"
+    "perPerson": "с человека",
+    "backToDestinations": "Назад к направлениям",
+    "backToItineraries": "Назад к маршрутам"
   },
   "regions": {
     "issyk-kul": "Иссык-Куль",
