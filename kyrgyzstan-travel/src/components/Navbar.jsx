@@ -1,8 +1,9 @@
-import { Menu, X, Search, Globe, Mountain } from 'lucide-react';
+import { Menu, X, Search, User, Globe, Mountain } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
 import { useSearch } from '../context/SearchContext';
+import { useAuth } from '../context/AuthContext';
 
 const navItems = [
   { key: 'nav.destinations', href: '/destinations' },
@@ -19,6 +20,7 @@ export default function Navbar() {
   const { t } = useTranslation();
   const { currentLanguage, changeLanguage, languages } = useLanguage();
   const { openSearch } = useSearch();
+  const { user, openLogin } = useAuth();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-graphite/80 backdrop-blur-md border-b border-white/5">
@@ -92,6 +94,29 @@ export default function Navbar() {
               <Search className="w-5 h-5 text-white/70 hover:text-white" aria-hidden="true" />
             </button>
 
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => {}}
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm font-medium"
+                  aria-expanded={false}
+                  aria-haspopup="listbox"
+                >
+                  <div className="w-8 h-8 rounded-full bg-terracotta/20 flex items-center justify-center">
+                    <User className="w-5 h-5 text-terracotta" aria-hidden="true" />
+                  </div>
+                  <span className="hidden sm:block">{user.name || user.email}</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={openLogin}
+                className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:bg-terracotta/10 transition-colors"
+                aria-label="Profile"
+              >
+                <User className="w-5 h-5 text-white/70 hover:text-white" aria-hidden="true" />
+              </button>
+            )}
           </div>
 
           <button

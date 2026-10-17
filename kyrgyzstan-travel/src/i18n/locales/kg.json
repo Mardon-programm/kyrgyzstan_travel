@@ -394,7 +394,11 @@
   "destinations": {
     "title": "Багыттар",
     "subtitle": "Элдин эң сулуу жерлерин ачып көрүңүз.",
-    "highlights": "Негизги жактары"
+    "highlights": "Негизги жактары",
+    "practicalInfo": "Практикалык маалымат",
+    "coordinates": "Координаталар",
+    "elevation": "Бииктик",
+    "backToDestinations": "Багыттарга кайтуу"
   },
   "events": {
     "title": "Иш-чаралар",

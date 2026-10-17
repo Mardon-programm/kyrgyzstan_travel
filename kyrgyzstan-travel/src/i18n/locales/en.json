@@ -191,7 +191,8 @@
     "from": "from",
     "perDay": "per day",
     "perNight": "per night",
-    "perPerson": "per person"
+    "perPerson": "per person",
+    "backToDestinations": "Back to destinations"
   },
   "regions": {
     "issyk-kul": "Issyk-Kul",
@@ -391,10 +392,14 @@
     "perPerson": "per person",
     "viewProfile": "View profile"
   },
-  "destinations": {
+"destinations": {
     "title": "Destinations",
-    "subtitle": "Discover the country’s most inspiring places.",
-    "highlights": "Highlights"
+    "subtitle": "Discover the country's most inspiring places.",
+    "highlights": "Highlights",
+    "practicalInfo": "Practical Information",
+    "coordinates": "Coordinates",
+    "elevation": "Elevation",
+    "backToDestinations": "Back to destinations"
   },
   "events": {
     "title": "Events",

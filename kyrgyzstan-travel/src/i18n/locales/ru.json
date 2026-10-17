@@ -391,10 +391,14 @@
     "perPerson": "с человека",
     "viewProfile": "Профиль"
   },
-  "destinations": {
+"destinations": {
     "title": "Направления",
-    "subtitle": "Откройте самые красивые места страны.",
-    "highlights": "Главные особенности"
+    "subtitle": "Откройте для себя самые вдохновляющие места страны.",
+    "highlights": "Основные достопримечательности",
+    "practicalInfo": "Практическая информация",
+    "coordinates": "Координаты",
+    "elevation": "Высота",
+    "backToDestinations": "Назад к направлениям"
   },
   "events": {
     "title": "Мероприятия",
