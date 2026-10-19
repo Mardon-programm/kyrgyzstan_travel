@@ -2,10 +2,13 @@ import { X, Calendar, Users, MapPin, CheckCircle, Loader2, CreditCard, Mail, Pho
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBookingCreate } from '../hooks/useApi';
+import { useBooking } from '../context/BookingContext';
 
-export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit }) {
+export default function BookingModal() {
   const { t } = useTranslation();
   const { createBooking, loading: submitting } = useBookingCreate();
+  const { bookingModal, closeBooking } = useBooking();
+  const { isOpen, tour, tourDate } = bookingModal;
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -110,7 +113,7 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
       await createBooking(bookingData);
       setSubmitSuccess(true);
       setTimeout(() => {
-        onClose();
+        closeBooking();
       }, 2000);
     } catch (error) {
       console.error('Booking failed:', error);
@@ -128,7 +131,7 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onClick={(e) => e.target === e.currentTarget && closeBooking()}
       role="dialog"
       aria-modal="true"
       aria-labelledby="booking-title"
@@ -143,7 +146,7 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
               {submitSuccess ? t('booking.confirmed') : t('booking.title', { title: tour?.title || '' })}
             </h2>
             <button
-              onClick={onClose}
+              onClick={closeBooking}
               className="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
               aria-label={t('common.close')}
             >
@@ -158,7 +161,7 @@ export default function BookingModal({ isOpen, onClose, tour, tourDate, onSubmit
               </div>
               <h3 className="font-display text-xl font-bold text-white mb-2">{t('booking.success.title')}</h3>
               <p className="text-white/60 mb-6" dangerouslySetInnerHTML={{ __html: t('booking.success.message', { email: formData.email }) }} />
-              <button onClick={onClose} className="btn-primary">{t('booking.success.backToTours')}</button>
+              <button onClick={closeBooking} className="btn-primary">{t('booking.success.backToTours')}</button>
             </div>
           ) : (
             <>
