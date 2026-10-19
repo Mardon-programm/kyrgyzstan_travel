@@ -7,6 +7,10 @@
       "config": { "distDir": "dist" }
     },
     {
+      "src": "api/build.py",
+      "use": "@vercel/python"
+    },
+    {
       "src": "api/index.py",
       "use": "@vercel/python"
     }
