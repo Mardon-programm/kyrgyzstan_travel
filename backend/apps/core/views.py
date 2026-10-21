@@ -1,8 +1,84 @@
-from rest_framework import viewsets, filters
-from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth import authenticate, get_user_model
 from django.utils import timezone
+from rest_framework import filters, status, viewsets
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Region, Category, Location, Review, Event
-from .serializers import RegionSerializer, CategorySerializer, LocationListSerializer, LocationDetailSerializer, ReviewSerializer, EventSerializer
+from .serializers import (
+    EventSerializer,
+    LocationDetailSerializer,
+    LocationListSerializer,
+    RegionSerializer,
+    CategorySerializer,
+    ReviewSerializer,
+    UserLoginSerializer,
+    UserRegisterSerializer,
+    UserSerializer,
+)
+
+User = get_user_model()
+
+
+class AuthRegisterAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserRegisterSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        user = serializer.save()
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user': UserSerializer(user).data,
+        }, status=status.HTTP_201_CREATED)
+
+
+class AuthLoginAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserLoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        email = serializer.validated_data['email'].lower().strip()
+        password = serializer.validated_data['password']
+
+        user = authenticate(request, username=email, password=password)
+        if not user:
+            user = User.objects.filter(email=email).first()
+            if user and user.check_password(password):
+                user = authenticate(request, username=user.username, password=password)
+
+        if not user:
+            return Response({'detail': 'Invalid email or password.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user': UserSerializer(user).data,
+        }, status=status.HTTP_200_OK)
+
+
+class AuthLogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        if request.auth:
+            request.auth.delete()
+        return Response({'detail': 'Logged out successfully.'}, status=status.HTTP_200_OK)
+
+
+class AuthMeAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response(UserSerializer(request.user).data)
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Lock, Mail, User, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import { authApi } from '../services/api';
 
 export default function AuthModal() {
   const { t } = useTranslation();
@@ -9,6 +10,7 @@ export default function AuthModal() {
   const [mode, setMode] = useState('login');
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!isAuthModalOpen) {
@@ -23,7 +25,7 @@ export default function AuthModal() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const email = form.email.trim();
     const password = form.password.trim();
@@ -39,16 +41,29 @@ export default function AuthModal() {
       return;
     }
 
-    const user = {
-      id: Date.now(),
-      name: name || email.split('@')[0],
-      email,
-      role: 'traveler',
-    };
+    setIsSubmitting(true);
+    setError('');
 
-    login(user);
-    setForm({ name: '', email: '', password: '' });
-    setMode('login');
+    try {
+      const payload = mode === 'login'
+        ? { email, password }
+        : { name, email, password };
+
+      const response = mode === 'login'
+        ? await authApi.login(payload)
+        : await authApi.register(payload);
+
+      const user = response.data.user;
+      const token = response.data.token;
+      login(user, token);
+      setForm({ name: '', email: '', password: '' });
+      setMode('login');
+    } catch (err) {
+      const message = err.response?.data?.detail || err.response?.data?.non_field_errors?.[0] || err.response?.data?.email?.[0] || err.message || 'Authentication failed';
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -136,8 +151,8 @@ export default function AuthModal() {
 
           {error && <p className="text-sm text-red-400">{error}</p>}
 
-          <button type="submit" className="btn-primary w-full justify-center py-3.5">
-            {mode === 'login' ? t('auth.loginButton') : t('auth.registerButton')}
+          <button type="submit" className="btn-primary w-full justify-center py-3.5" disabled={isSubmitting}>
+            {isSubmitting ? (mode === 'login' ? 'Logging in...' : 'Creating account...') : (mode === 'login' ? t('auth.loginButton') : t('auth.registerButton'))}
           </button>
         </form>
 

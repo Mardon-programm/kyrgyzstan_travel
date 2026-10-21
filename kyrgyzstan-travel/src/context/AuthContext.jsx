@@ -19,15 +19,19 @@ export function AuthProvider({ children }) {
     setIsLoading(false);
   }, []);
 
-  const login = useCallback((userData) => {
+  const login = useCallback((userData, token = null) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+    if (token) {
+      localStorage.setItem('auth_token', token);
+    }
     setIsAuthModalOpen(false);
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('auth_token');
     setIsAuthModalOpen(false);
   }, []);
 

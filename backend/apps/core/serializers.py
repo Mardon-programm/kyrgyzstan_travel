@@ -1,5 +1,69 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from .models import Region, Category, Location, Review, Event
+
+User = get_user_model()
+
+
+class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'email', 'first_name', 'last_name']
+
+    def get_name(self, obj):
+        return (obj.get_full_name() or obj.email.split('@')[0]).strip() or 'Traveler'
+
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=6)
+    name = serializers.CharField(write_only=True, required=False, allow_blank=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'email', 'password', 'first_name', 'last_name']
+        read_only_fields = ['id']
+
+    def validate_email(self, value):
+        value = value.strip().lower()
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError('This email is already registered.')
+        return value
+
+    def validate_password(self, value):
+        validate_password(value)
+        return value
+
+    def create(self, validated_data):
+        name = validated_data.pop('name', '').strip()
+        password = validated_data.pop('password')
+        email = validated_data.pop('email').lower().strip()
+
+        first_name = validated_data.pop('first_name', '')
+        last_name = validated_data.pop('last_name', '')
+
+        if name:
+            parts = name.split(maxsplit=1)
+            if not first_name:
+                first_name = parts[0]
+            if len(parts) > 1 and not last_name:
+                last_name = parts[1]
+
+        user = User.objects.create_user(
+            username=email,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+        )
+        return user
+
+
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
 
 
 class RegionSerializer(serializers.ModelSerializer):
