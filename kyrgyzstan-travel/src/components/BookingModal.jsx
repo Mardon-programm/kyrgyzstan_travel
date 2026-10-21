@@ -127,6 +127,36 @@ export default function BookingModal() {
   const today = new Date().toISOString().split('T')[0];
 
   const totalPrice = tour && tourDate ? (tour.price * formData.guests).toFixed(2) : '0';
+  const chatTelegramUsername = 'kyrgyzstantravel';
+  const chatWhatsAppNumber = '996312979898';
+  const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+
+  const buildContactMessage = () => {
+    const dateLabel = formData.date
+      ? new Date(formData.date).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      : 'не выбрана';
+
+    return [
+      'Здравствуйте! Я хочу забронировать тур.',
+      `ФИО: ${fullName || 'не указано'}`,
+      `Тур: ${tour?.title || 'не указан'}`,
+      `Дата: ${dateLabel}`,
+      `Гостей: ${formData.guests || 1}`,
+      `Телефон: ${formData.phone || 'не указан'}`,
+      `Email: ${formData.email || 'не указан'}`,
+      `Комментарий: ${formData.notes || '—'}`,
+      'Пожалуйста, свяжитесь со мной для подтверждения и оплаты.'
+    ].join('\n');
+  };
+
+  const handleOpenChat = (channel) => {
+    const message = encodeURIComponent(buildContactMessage());
+    const targetUrl = channel === 'telegram'
+      ? `https://t.me/${chatTelegramUsername}?text=${message}`
+      : `https://wa.me/${chatWhatsAppNumber}?text=${message}`;
+
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div
@@ -373,29 +403,31 @@ export default function BookingModal() {
                       <label htmlFor="terms" className="text-sm text-white/70" dangerouslySetInnerHTML={{ __html: t('booking.form.terms') }} />
                     </div>
 
-                    <div className="flex gap-4 pt-4">
-                      <button type="button" onClick={handleBack} className="btn-secondary flex-1">{t('booking.form.back')}</button>
+                    <div className="space-y-3 pt-4">
+                      <div className="flex gap-3">
+                        <button type="button" onClick={handleBack} className="btn-secondary flex-1">{t('booking.form.back')}</button>
+                        <button
+                          type="button"
+                          onClick={() => handleOpenChat('telegram')}
+                          className="btn-primary flex-1 flex items-center justify-center gap-2"
+                        >
+                          <span aria-hidden="true">✈️</span>
+                          Telegram
+                        </button>
+                      </div>
+
                       <button
-                        type="submit"
-                        disabled={submitting || isSubmitting}
-                        className="btn-primary flex-1 flex items-center justify-center gap-2"
+                        type="button"
+                        onClick={() => handleOpenChat('whatsapp')}
+                        className="btn-secondary w-full flex items-center justify-center gap-2"
                       >
-                        {submitting || isSubmitting ? (
-                          <>
-                            <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
-                            {t('booking.form.processing')}
-                          </>
-                        ) : (
-                          <>
-                            <CreditCard className="w-5 h-5" aria-hidden="true" />
-                            {t('booking.form.pay', { amount: totalPrice })}
-                          </>
-                        )}
+                        <span aria-hidden="true">💬</span>
+                        WhatsApp
                       </button>
                     </div>
 
                     <p className="text-center text-xs text-white/40">
-                      Secure payment powered by Stripe. Your data is encrypted.
+                      После нажатия откроется чат с заранее заполненным сообщением: ФИО, тур, дата и контакты.
                     </p>
                   </div>
                 )}

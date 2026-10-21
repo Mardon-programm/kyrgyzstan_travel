@@ -157,6 +157,26 @@
     "madeWith": "Сделано с ❤️ в Тянь-Шане",
     "backToTop": "Наверх"
   },
+  "auth": {
+    "kicker": "Аккаунт",
+    "loginTitle": "С возвращением",
+    "registerTitle": "Создать аккаунт",
+    "name": "Полное имя",
+    "namePlaceholder": "Ваше имя",
+    "email": "Email",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "loginButton": "Войти",
+    "registerButton": "Создать аккаунт",
+    "registerLink": "Зарегистрироваться",
+    "loginLink": "Войти",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "validation": {
+      "required": "Email и пароль обязательны.",
+      "nameRequired": "Пожалуйста, укажите ваше полное имя."
+    }
+  },
   "common": {
     "loading": "Загрузка...",
     "error": "Произошла ошибка",
@@ -187,13 +207,21 @@
     "back": "Назад",
     "featured": "Избранное",
     "days": "дней",
+    "step": "Шаг {{step}}",
+    "notSelected": "Не выбрано",
+    "selectDate": "Выберите дату",
+    "spotsLeft": "мест осталось",
+    "guaranteed": "Гарантировано",
     "noResults": "Ничего не найдено",
     "from": "от",
     "perDay": "в день",
     "perNight": "в ночь",
     "perPerson": "с человека",
     "backToDestinations": "Назад к направлениям",
-    "backToItineraries": "Назад к маршрутам"
+    "backToItineraries": "Назад к маршрутам",
+    "backToTours": "Назад к турам",
+    "backToEvents": "Назад к событиям",
+    "backToGuide": "Назад к гайду"
   },
   "regions": {
     "issyk-kul": "Иссык-Куль",

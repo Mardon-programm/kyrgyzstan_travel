@@ -1,18 +1,42 @@
-import { MapPin, MapPin as MapPinIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useFeaturedLocations } from '../hooks/useApi';
 
 const badgeStyles = {
-  Popular: 'badge-terracotta',
-  Ethno: 'badge-pine',
-  Scenic: 'badge-gold',
-  Historic: 'bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs font-medium px-3 py-1 rounded-full',
-  Epic: 'bg-red-500/20 text-red-400 border-red-500/30 text-xs font-medium px-3 py-1 rounded-full',
   popular: 'badge-terracotta',
   ethno: 'badge-pine',
   scenic: 'badge-gold',
   historic: 'bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs font-medium px-3 py-1 rounded-full',
   epic: 'bg-red-500/20 text-red-400 border-red-500/30 text-xs font-medium px-3 py-1 rounded-full',
+};
+
+const normalizeBadgeKey = (badge) => {
+  if (!badge) return 'popular';
+  const raw = String(badge).trim();
+  const clean = raw.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+  if (!clean) return 'popular';
+  if (clean in badgeStyles) return clean;
+  if (clean.includes('ethno')) return 'ethno';
+  if (clean.includes('scenic')) return 'scenic';
+  if (clean.includes('historic')) return 'historic';
+  if (clean.includes('epic')) return 'epic';
+  return 'popular';
+};
+
+const normalizeImageUrl = (value) => {
+  if (!value) return 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80';
+
+  const url = String(value).trim();
+  if (url.startsWith('http://0.0.0.0/media/')) {
+    const candidate = decodeURIComponent(url.replace('http://0.0.0.0/media/', ''));
+    if (candidate.startsWith('http')) return candidate;
+  }
+
+  if (url.includes('/media/https%3A') || url.includes('/media/http%3A')) {
+    const candidate = decodeURIComponent(url.split('/media/')[1]);
+    if (candidate.startsWith('http')) return candidate;
+  }
+
+  return url;
 };
 
 export default function TopLocations() {
@@ -73,68 +97,73 @@ export default function TopLocations() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {locations.map((location, index) => (
-            <article
-              key={location.id}
-              className="group glass-card p-0 overflow-hidden relative animate-slide-up"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={location.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'}
-                  alt={`${location.name} landscape`}
-                  className="w-full h-full object-cover hover-zoom"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-graphite/80 via-transparent to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <span className={badgeStyles[location.badge] || badgeStyles.Popular}>
-                    {t(`topLocations.badges.${location.badge?.toLowerCase()}`) || location.badge}
-                  </span>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-white/80 text-sm">
-                    <span className="w-2 h-2 rounded-full bg-terracotta" aria-hidden="true" />
-                    <span>{location.region?.name || location.region}</span>
+          {locations.map((location, index) => {
+            const badgeKey = normalizeBadgeKey(location.badge ?? location.category?.slug ?? location.category);
+            const badgeLabel = t(`topLocations.badges.${badgeKey}`) !== `topLocations.badges.${badgeKey}`
+              ? t(`topLocations.badges.${badgeKey}`)
+              : (location.badge || location.category?.name || 'Popular');
+
+            return (
+              <article
+                key={location.id}
+                className="group glass-card p-0 overflow-hidden relative animate-slide-up"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={normalizeImageUrl(location.image)}
+                    alt={`${location.name} landscape`}
+                    className="w-full h-full object-cover hover-zoom"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphite/80 via-transparent to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <span className={badgeStyles[badgeKey] || badgeStyles.popular}>{badgeLabel}</span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-white/80 text-sm">
+                      <span className="w-2 h-2 rounded-full bg-terracotta" aria-hidden="true" />
+                      <span>{location.region?.name || location.region}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="p-6 space-y-4">
-                <div>
-                  <h3 className="font-display text-xl font-bold text-white group-hover:text-terracotta transition-colors">
-                    {location.name}
-                  </h3>
-                  <p className="text-white/50 text-sm mt-1">{location.region?.name || location.region}</p>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {location.tags?.map((tag) => (
-                    <span key={tag} className="px-2.5 py-1 rounded-lg bg-white/5 text-white/70 text-xs border border-white/10">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="topo-divider" />
-
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div className="p-3 rounded-xl bg-white/5">
-                    <p className="elevation">{t('topLocations.elevation')}</p>
-                    <p className="gps-coords mt-1">{location.elevation ? `${location.elevation.toLocaleString()}m ASL` : ''}</p>
+                <div className="p-6 space-y-4">
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-white group-hover:text-terracotta transition-colors">
+                      {location.name}
+                    </h3>
+                    <p className="text-white/50 text-sm mt-1">{location.region?.name || location.region}</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/5">
-                    <p className="elevation">{t('topLocations.coordinates')}</p>
-                    <p className="gps-coords mt-1 truncate">
-                      {location.latitude && location.longitude
-                        ? `${Number(location.latitude).toFixed(4)}° N, ${Number(location.longitude).toFixed(4)}° E`
-                        : ''}
-                    </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {location.tags?.map((tag) => (
+                      <span key={tag} className="px-2.5 py-1 rounded-lg bg-white/5 text-white/70 text-xs border border-white/10">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="topo-divider" />
+
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="p-3 rounded-xl bg-white/5">
+                      <p className="elevation">{t('topLocations.elevation')}</p>
+                      <p className="gps-coords mt-1">{location.elevation ? `${Number(location.elevation).toLocaleString('en-US')}m ASL` : ''}</p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white/5">
+                      <p className="elevation">{t('topLocations.coordinates')}</p>
+                      <p className="gps-coords mt-1 truncate">
+                        {location.latitude && location.longitude
+                          ? `${Number(location.latitude).toFixed(4)}° N, ${Number(location.longitude).toFixed(4)}° E`
+                          : ''}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
         <div className="text-center mt-12">

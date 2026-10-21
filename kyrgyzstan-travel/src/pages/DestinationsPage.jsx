@@ -159,7 +159,7 @@ export default function DestinationsPage() {
                 <div className="flex items-center justify-between pt-4 border-t border-white/10">
                   <div className="flex items-center gap-2 text-sm text-white/60">
                     <MapPin className="w-4 h-4 text-terracotta" aria-hidden="true" />
-                    <span>{destination.elevation ? `${destination.elevation.toLocaleString()}m` : ''}</span>
+                    <span>{destination.elevation ? `${Number(destination.elevation).toLocaleString('en-US')}m ASL` : ''}</span>
                   </div>
                   <Link to={`/destinations/${destination.slug}`} className="btn-primary px-4 py-2 text-sm">
                     {t('common.viewDetails')}

@@ -157,6 +157,26 @@
     "madeWith": "Made with ❤️ in the Tien Shan",
     "backToTop": "Back to top"
   },
+  "auth": {
+    "kicker": "Account",
+    "loginTitle": "Welcome back",
+    "registerTitle": "Create account",
+    "name": "Full name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "loginButton": "Log in",
+    "registerButton": "Create account",
+    "registerLink": "Register",
+    "loginLink": "Log in",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "validation": {
+      "required": "Email and password are required.",
+      "nameRequired": "Please enter your full name."
+    }
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
@@ -187,13 +207,21 @@
     "back": "Back",
     "featured": "Featured",
     "days": "days",
+    "step": "Step {{step}}",
+    "notSelected": "Not selected",
+    "selectDate": "Select date",
+    "spotsLeft": "spots left",
+    "guaranteed": "Guaranteed",
     "noResults": "No results found",
     "from": "from",
     "perDay": "per day",
-"perNight": "per night",
+    "perNight": "per night",
     "perPerson": "per person",
     "backToDestinations": "Back to destinations",
-    "backToItineraries": "Back to itineraries"
+    "backToItineraries": "Back to itineraries",
+    "backToTours": "Back to tours",
+    "backToEvents": "Back to events",
+    "backToGuide": "Back to guide"
   },
   "regions": {
     "issyk-kul": "Issyk-Kul",

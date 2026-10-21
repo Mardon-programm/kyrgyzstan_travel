@@ -5,6 +5,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem('user');
@@ -21,25 +22,31 @@ export function AuthProvider({ children }) {
   const login = useCallback((userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+    setIsAuthModalOpen(false);
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('user');
+    setIsAuthModalOpen(false);
   }, []);
 
   const openLogin = useCallback(() => {
-    // This will be handled by a modal in the UI
-    // For now, we'll just trigger a custom event
-    window.dispatchEvent(new CustomEvent('open-login-modal'));
+    setIsAuthModalOpen(true);
+  }, []);
+
+  const closeLogin = useCallback(() => {
+    setIsAuthModalOpen(false);
   }, []);
 
   const value = {
     user,
     isLoading,
+    isAuthModalOpen,
     login,
     logout,
     openLogin,
+    closeLogin,
   };
 
   return (

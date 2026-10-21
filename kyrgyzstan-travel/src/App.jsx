@@ -12,6 +12,7 @@ import DestinationsMap from './components/DestinationsMap';
 import ToursActivities from './components/ToursActivities';
 import BookingModal from './components/BookingModal';
 import SearchModal from './components/SearchModal';
+import AuthModal from './components/AuthModal';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ToursPage from './pages/ToursPage';
@@ -67,6 +68,7 @@ function App() {
                   <Footer />
                   <BookingModal />
                   <SearchModal />
+                  <AuthModal />
                 </div>
               </BrowserRouter>
             </AuthProvider>

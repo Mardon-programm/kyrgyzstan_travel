@@ -1,10 +1,12 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Filter, ChevronDown, X, Star, MapPin, Users, Car, Home, Shield, Award, Languages, DollarSign } from 'lucide-react';
 import { useGuides, useVehicles, useYurtCamps } from '../hooks/useApi';
+import { useAuth } from '../context/AuthContext';
 
 export default function ServicesPage() {
   const { t } = useTranslation();
+  const { openLogin } = useAuth();
   const [activeTab, setActiveTab] = useState('guides');
   const [filters, setFilters] = useState({});
   const [showFilters, setShowFilters] = useState(false);
@@ -203,7 +205,11 @@ export default function ServicesPage() {
                       {item.price_per_day ? t('services.perDay') : item.price_per_night ? t('services.perNight') : t('services.perPerson')}
                     </span>
                   </div>
-                  <button className="btn-primary px-5 py-2.5 text-sm">
+                  <button
+                    type="button"
+                    onClick={openLogin}
+                    className="btn-primary px-5 py-2.5 text-sm"
+                  >
                     {t('services.viewProfile')}
                     <span className="w-4 h-4 ml-1" aria-hidden="true">→</span>
                   </button>

@@ -157,6 +157,26 @@
     "madeWith": "Тянь-Шанда ❤️ менен жасалды",
     "backToTop": "Жогоруга"
   },
+  "auth": {
+    "kicker": "Аккаунт",
+    "loginTitle": "Кайтып кош келдиңиз",
+    "registerTitle": "Аккаунт түзүү",
+    "name": "Толук аты",
+    "namePlaceholder": "Атыңыз",
+    "email": "Email",
+    "password": "Сырсөз",
+    "passwordPlaceholder": "Сырсөздү киргизиңиз",
+    "loginButton": "Кирүү",
+    "registerButton": "Аккаунт түзүү",
+    "registerLink": "Катталуу",
+    "loginLink": "Кирүү",
+    "noAccount": "Аккаунтуңуз жокпу?",
+    "hasAccount": "Аккаунтуңуз барбы?",
+    "validation": {
+      "required": "Email жана сырсөз талап кылынат.",
+      "nameRequired": "Толук атыңызды киргизиңиз."
+    }
+  },
   "common": {
     "loading": "Жүктөөдө...",
     "error": "Ката кетти",
@@ -187,13 +207,21 @@
     "back": "Артка",
     "featured": "Тандалган",
     "days": "күн",
+    "step": "Қадам {{step}}",
+    "notSelected": "Тандалган жок",
+    "selectDate": "Күн тандоо",
+    "spotsLeft": "орун калды",
+    "guaranteed": "Кепилденген",
     "noResults": "Ничего не найдено",
     "from": "башталып",
-    "perDay": "күңүнө",
+    "perDay": "күңüne",
     "perNight": "түнүнө",
     "perPerson": "адамга",
     "backToDestinations": "Багыттарга кайтуу",
-    "backToItineraries": "Маршруттарга кайтуу"
+    "backToItineraries": "Маршруттарга кайтуу",
+    "backToTours": "Турларга кайтуу",
+    "backToEvents": "Иш-чараларга кайтуу",
+    "backToGuide": "Гайдына кайтуу"
   },
   "regions": {
     "issyk-kul": "Ысык-Көл",
