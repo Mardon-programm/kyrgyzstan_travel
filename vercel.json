@@ -1,25 +1,37 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "kyrgyzstan-travel/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "api": {
+      "root": "api",
+      "framework": "django"
     },
-    {
-      "src": "api/build.py",
-      "use": "@vercel/python"
+    "backend": {
+      "root": "backend",
+      "framework": "django"
     },
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+    "kyrgyzstan-travel": {
+      "root": "kyrgyzstan-travel",
+      "framework": "vite"
     }
-  ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "/api/index.py" },
-    { "src": "/admin/(.*)", "dest": "/api/index.py" },
-    { "src": "/assets/(.*)", "dest": "/assets/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "kyrgyzstan-travel"
+      }
+    }
   ]
 }
