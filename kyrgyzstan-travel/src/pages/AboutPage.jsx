@@ -1,27 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Mountain, Users, Heart, Globe, Award, Shield } from 'lucide-react';
 
-const stats = [
-  { icon: Mountain, label: 'Destinations', value: '50+' },
-  { icon: Users, label: 'Happy Travelers', value: '10,000+' },
-  { icon: Heart, label: 'Local Partners', value: '200+' },
-  { icon: Award, label: 'Years Experience', value: '15+' },
-];
-
-const values = [
-  { icon: Shield, title: 'Safety First', description: 'Your safety is our top priority. All tours are led by certified guides with extensive local knowledge.' },
-  { icon: Heart, title: 'Authentic Experiences', description: 'We connect you with local communities for genuine cultural immersion, not tourist traps.' },
-  { icon: Globe, title: 'Sustainable Tourism', description: 'We practice responsible tourism that preserves nature and supports local economies.' },
-  { icon: Award, title: 'Expert Guides', description: 'Our guides are locals who know every trail, story, and hidden gem of Kyrgyzstan.' },
-];
-
-const team = [
-  { name: 'Aiperi Toktogulova', role: 'Founder & CEO', bio: 'Born in Bishkek, Aiperi has 15+ years in adventure tourism across Central Asia.' },
-  { name: 'Bakytbek Mamytov', role: 'Head Guide', bio: 'Certified mountain guide with 50+ expeditions to peaks over 7000m.' },
-  { name: 'Meerim Asanova', role: 'Operations Manager', bio: 'Ensures every detail of your journey is perfect, from airport pickup to mountain summit.' },
-  { name: 'Nurlanbek Uulu', role: 'Cultural Coordinator', bio: 'Connects travelers with nomadic families for authentic yurt stays and cultural exchanges.' },
-];
-
 export default function AboutPage() {
   const { t } = useTranslation();
 

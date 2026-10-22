@@ -16,6 +16,8 @@ export default function ToursActivities() {
   const { openBooking } = useBooking();
   const { data, loading, error, refetch } = useFeaturedTours();
 
+  const formatDuration = (count, singularKey, pluralKey) => `${count} ${count === 1 ? t(singularKey) : t(pluralKey)}`;
+
   if (loading) {
     return (
       <section id="tours" className="py-20 lg:py-32 bg-graphite" aria-labelledby="tours-title">
@@ -113,7 +115,7 @@ export default function ToursActivities() {
                 <div className="flex flex-wrap items-center gap-4 text-sm text-white/60 border-t border-white/10 pt-4">
                   <div className="flex items-center gap-1.5">
                     <Calendar className="w-4 h-4" aria-hidden="true" />
-                    <span>{tour.duration_days} {tour.duration_days === 1 ? 'day' : 'days'} / {tour.duration_nights} {tour.duration_nights === 1 ? 'night' : 'nights'}</span>
+                    <span>{formatDuration(tour.duration_days, 'common.day', 'common.days')} / {formatDuration(tour.duration_nights, 'common.night', 'common.nights')}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Users className="w-4 h-4" aria-hidden="true" />

@@ -21,6 +21,7 @@ export default function Navbar() {
   const { currentLanguage, changeLanguage, languages } = useLanguage();
   const { openSearch } = useSearch();
   const { user, openLogin } = useAuth();
+  const authLabel = user ? user.name || user.email || t('nav.profile') : t('nav.profile');
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-graphite/80 backdrop-blur-md border-b border-white/5">
@@ -94,29 +95,17 @@ export default function Navbar() {
               <Search className="w-5 h-5 text-white/70 hover:text-white" aria-hidden="true" />
             </button>
 
-            {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => {}}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm font-medium"
-                  aria-expanded={false}
-                  aria-haspopup="listbox"
-                >
-                  <div className="w-8 h-8 rounded-full bg-terracotta/20 flex items-center justify-center">
-                    <User className="w-5 h-5 text-terracotta" aria-hidden="true" />
-                  </div>
-                  <span className="hidden sm:block">{user.name || user.email}</span>
-                </button>
+            <button
+              type="button"
+              onClick={user ? undefined : openLogin}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm font-medium"
+              aria-label={authLabel}
+            >
+              <div className={`w-8 h-8 rounded-full ${user ? 'bg-terracotta/20' : 'bg-white/5'} flex items-center justify-center`}>
+                <User className={`w-5 h-5 ${user ? 'text-terracotta' : 'text-white/70'}`} aria-hidden="true" />
               </div>
-            ) : (
-              <button
-                onClick={openLogin}
-                className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:bg-terracotta/10 transition-colors"
-                aria-label="Profile"
-              >
-                <User className="w-5 h-5 text-white/70 hover:text-white" aria-hidden="true" />
-              </button>
-            )}
+              <span className="hidden sm:block">{user ? user.name || user.email : t('nav.profile')}</span>
+            </button>
           </div>
 
           <button
@@ -163,6 +152,17 @@ export default function Navbar() {
                 </button>
               ))}
             </div>
+            <button
+              type="button"
+              onClick={() => {
+                openLogin();
+                setIsMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition-colors"
+            >
+              <User className="w-4 h-4" aria-hidden="true" />
+              <span>{user ? user.name || user.email : t('nav.profile')}</span>
+            </button>
           </div>
         </div>
       </nav>

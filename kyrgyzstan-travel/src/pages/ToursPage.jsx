@@ -15,6 +15,7 @@ const difficultyLabels = {
 export default function ToursPage() {
   const { t, i18n } = useTranslation();
   const { openBooking } = useBooking();
+  const formatDuration = (count, singularKey, pluralKey) => `${count} ${count === 1 ? t(singularKey) : t(pluralKey)}`;
   const getLocalizedText = (item, fallback = '') => {
     if (!item) return fallback;
     const lang = i18n.language?.startsWith('ru') ? 'ru' : i18n.language?.startsWith('kg') ? 'kg' : 'en';
@@ -223,7 +224,7 @@ export default function ToursPage() {
                 <div className="flex flex-wrap items-center gap-4 text-sm text-white/60 border-t border-white/10 pt-4">
                   <div className="flex items-center gap-1.5">
                     <Calendar className="w-4 h-4" aria-hidden="true" />
-                    <span>{tour.duration_days} {tour.duration_days === 1 ? 'day' : 'days'} / {tour.duration_nights} {tour.duration_nights === 1 ? 'night' : 'nights'}</span>
+                    <span>{formatDuration(tour.duration_days, 'common.day', 'common.days')} / {formatDuration(tour.duration_nights, 'common.night', 'common.nights')}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Users className="w-4 h-4" aria-hidden="true" />

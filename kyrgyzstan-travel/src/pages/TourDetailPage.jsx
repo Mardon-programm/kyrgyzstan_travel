@@ -16,6 +16,7 @@ const difficultyLabels = {
 export default function TourDetailPage() {
   const { t, i18n } = useTranslation();
   const { slug } = useParams();
+  const formatDuration = (count, singularKey, pluralKey) => `${count} ${count === 1 ? t(singularKey) : t(pluralKey)}`;
   const getLocalizedText = (item, fallback = '') => {
     if (!item) return fallback;
     const lang = i18n.language?.startsWith('ru') ? 'ru' : i18n.language?.startsWith('kg') ? 'kg' : 'en';
@@ -103,7 +104,7 @@ export default function TourDetailPage() {
                     </div>
                     <div>
                       <p className="text-white/50 text-sm">{t('tours.duration')}</p>
-                      <p className="font-medium text-white">{tour.duration_days} {tour.duration_days === 1 ? 'day' : 'days'} / {tour.duration_nights} {tour.duration_nights === 1 ? 'night' : 'nights'}</p>
+                      <p className="font-medium text-white">{formatDuration(tour.duration_days, 'common.day', 'common.days')} / {formatDuration(tour.duration_nights, 'common.night', 'common.nights')}</p>
                     </div>
                   </div>
                 </div>
