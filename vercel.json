@@ -5,7 +5,7 @@
   "outputDirectory": "kyrgyzstan-travel/dist",
   "functions": {
     "backend/config/wsgi.py": {
-      "runtime": "@vercel/python"
+      "runtime": "python@3.12"
     }
   },
   "rewrites": [
