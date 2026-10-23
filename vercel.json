@@ -1,20 +1,17 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "kyrgyzstan-travel/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    },
-    {
-      "src": "backend/config/wsgi.py",
-      "use": "@vercel/python"
+  "framework": "vite",
+  "buildCommand": "cd kyrgyzstan-travel && npm run build",
+  "outputDirectory": "kyrgyzstan-travel/dist",
+  "functions": {
+    "backend/config/wsgi.py": {
+      "runtime": "python3.12"
     }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/admin/(.*)", "dest": "/admin/$1" },
-    { "src": "/assets/(.*)", "dest": "/assets/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/admin/(.*)", "destination": "/admin/$1" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
