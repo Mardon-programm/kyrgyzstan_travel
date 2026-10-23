@@ -1,16 +1,21 @@
 {
   "version": 2,
-  "buildCommand": "cd kyrgyzstan-travel && npm install && npm run build",
-  "outputDirectory": "kyrgyzstan-travel/dist",
-  "functions": {
-    "backend/config/wsgi.py": {
-      "maxDuration": 30
+  "builds": [
+    {
+      "src": "kyrgyzstan-travel/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
+    {
+      "src": "backend/config/wsgi.py",
+      "use": "@vercel/python"
     }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/backend/config/wsgi.py" },
-    { "source": "/admin/(.*)", "destination": "/backend/config/wsgi.py" },
-    { "source": "/admin", "destination": "/backend/config/wsgi.py" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "backend/config/wsgi.py" },
+    { "src": "/admin/(.*)", "dest": "backend/config/wsgi.py" },
+    { "src": "/admin", "dest": "backend/config/wsgi.py" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
