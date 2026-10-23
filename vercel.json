@@ -4,14 +4,13 @@
   "outputDirectory": "kyrgyzstan-travel/dist",
   "functions": {
     "backend/config/wsgi.py": {
-      "runtime": "@vercel/python"
+      "maxDuration": 30
     }
   },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/backend/config/wsgi.py" },
     { "source": "/admin/(.*)", "destination": "/backend/config/wsgi.py" },
     { "source": "/admin", "destination": "/backend/config/wsgi.py" },
-    { "source": "/((?!api|admin|assets).*)", "destination": "/kyrgyzstan-travel/dist/$1" },
-    { "source": "/(.*)", "destination": "/kyrgyzstan-travel/dist/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
