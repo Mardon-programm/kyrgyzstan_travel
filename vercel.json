@@ -15,8 +15,8 @@
     { "src": "/api/(.*)", "dest": "backend/config/wsgi.py" },
     { "src": "/admin/(.*)", "dest": "backend/config/wsgi.py" },
     { "src": "/admin", "dest": "backend/config/wsgi.py" },
-    { "src": "/assets/(.*)", "dest": "/kyrgyzstan-travel/dist/assets/$1" },
-    { "src": "/favicon.ico", "dest": "/kyrgyzstan-travel/dist/favicon.ico" },
+    { "src": "^/assets/(.*)$", "dest": "/kyrgyzstan-travel/dist/assets/$1" },
+    { "src": "^/(.*\\.(js|css|ico|png|jpg|svg|json|woff2?))$", "dest": "/kyrgyzstan-travel/dist/$1" },
     { "src": "/(.*)", "dest": "/kyrgyzstan-travel/dist/index.html" }
   ]
 }
