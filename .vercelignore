@@ -35,7 +35,6 @@ docker-compose.yml
 .dockerignore
 
 # Backend (not needed for Vercel frontend deploy)
-backend/
 docker-compose.yml
 init.sql
 nginx/
