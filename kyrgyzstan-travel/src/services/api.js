@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Use VITE_API_URL for Vercel, relative /api for nginx proxy
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const rawApiUrl = import.meta.env.VITE_API_URL || '/api';
+const API_BASE_URL = rawApiUrl.replace(/\/+$/, '');
 
 const api = axios.create({
   baseURL: API_BASE_URL,
