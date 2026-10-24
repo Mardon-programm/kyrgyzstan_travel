@@ -97,20 +97,23 @@ tour_site_kg/
 - API: Python serverless functions in `/api`
 - Rewrites: `/api/*` → Python functions, `/*` → `index.html` (SPA)
 
-## Database Migrations on Vercel
+## Prepare a Neon Database
 
-Use Vercel CLI or GitHub Actions:
+Neon hosts PostgreSQL; it cannot use a SQLite `.db` file as its database. Connect Django to Neon with the connection string from the Neon dashboard, then create the schema and sample catalogue data:
 
 ```bash
-# Run migrations
-vercel exec -- python manage.py migrate
-
-# Collect static files
-vercel exec -- python manage.py collectstatic --noinput
-
-# Create superuser
-vercel exec -- python manage.py createsuperuser
+cd backend
+pip install -r requirements.txt
+export DJANGO_SETTINGS_MODULE=config.settings_vercel
+export DATABASE_URL='postgresql://USER:PASSWORD@HOST/DBNAME?sslmode=require'
+python manage.py migrate
+python manage.py seed_demo_data
+python manage.py createsuperuser
 ```
+
+Run these commands from a trusted machine with access to the Neon connection string. Set the same `DATABASE_URL` in Vercel Project Settings → Environment Variables for Production, then redeploy. The seed command is safe to run again: it updates its sample catalogue entries without creating duplicates.
+
+The seed data is explicitly marked as sample content in service and event listings. Replace or remove it in Django admin before presenting those entries as real offers. Bookings, payments, and visitor reviews are left empty; they should come from real user activity.
 
 ## Custom Domain
 

@@ -27,16 +27,24 @@ if VERCEL_URL:
 # Add any custom domains
 CUSTOM_DOMAINS = config('CUSTOM_DOMAINS', default='')
 if CUSTOM_DOMAINS:
-    ALLOWED_HOSTS.extend([d.strip() for d in CUSTOM_DOMAINS.split(',')])
+    ALLOWED_HOSTS.extend([d.strip() for d in CUSTOM_DOMAINS.split(',') if d.strip()])
 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:5173,http://127.0.0.1:5173', cast=lambda v: [s.strip() for s in v.split(',')])
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS', 
+    default='http://localhost:5173,http://127.0.0.1:5173', 
+    cast=lambda v: [s.strip() for s in v.split(',') if s.strip()]
+)
 
 # Add Vercel URL to CSRF trusted origins
 if VERCEL_URL:
     CSRF_TRUSTED_ORIGINS.append(f'https://{VERCEL_URL}')
     CSRF_TRUSTED_ORIGINS.append(f'https://www.{VERCEL_URL}')
 
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173,http://127.0.0.1:5173', cast=lambda v: [s.strip() for s in v.split(',')])
+CORS_ALLOWED_ORIGINS = config(
+    'CORS_ALLOWED_ORIGINS', 
+    default='http://localhost:5173,http://127.0.0.1:5173', 
+    cast=lambda v: [s.strip() for s in v.split(',') if s.strip()]
+)
 CORS_ALLOW_CREDENTIALS = True
 
 SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=False, cast=bool)

@@ -3,8 +3,10 @@ from decimal import Decimal
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from apps.core.models import Region, Category
-from apps.destinations.models import Destination
+from apps.core.models import Region, Category, Location, Event
+from apps.destinations.models import Destination, DestinationTag, DestinationTagRelation
+from apps.itineraries.models import Itinerary, ItineraryDay
+from apps.services.models import Guide, Vehicle, YurtCamp
 from apps.guide.models import GuideCategory, TravelArticle, FAQ
 from apps.tours.models import Tour, TourDate
 
@@ -35,6 +37,21 @@ class Command(BaseCommand):
                 'name': 'Chuy', 'name_kg': 'Чүй', 'name_ru': 'Чуй',
                 'slug': 'chuy', 'description': 'Close to Bishkek with scenic valleys and heritage sites.',
                 'spots_count': 14, 'order': 4, 'is_active': True,
+            },
+            {
+                'name': 'Talas', 'name_kg': 'Талас', 'name_ru': 'Талас',
+                'slug': 'talas', 'description': 'Mountain valleys, Manas heritage, and quiet rural routes.',
+                'spots_count': 10, 'order': 5, 'is_active': True,
+            },
+            {
+                'name': 'Jalal-Abad', 'name_kg': 'Жалал-Абад', 'name_ru': 'Джалал-Абад',
+                'slug': 'jalal-abad', 'description': 'Walnut forests, mountain villages, and warm southern hospitality.',
+                'spots_count': 15, 'order': 6, 'is_active': True,
+            },
+            {
+                'name': 'Batken', 'name_kg': 'Баткен', 'name_ru': 'Баткен',
+                'slug': 'batken', 'description': 'Distinctive landscapes, apricot orchards, and southern mountain routes.',
+                'spots_count': 9, 'order': 7, 'is_active': True,
             },
         ]
 
@@ -67,6 +84,10 @@ class Command(BaseCommand):
             {
                 'name': 'Jeep Tours', 'name_kg': 'Джип турлар', 'name_ru': 'Джип-туры',
                 'slug': 'jeep', 'icon': 'Car', 'description': 'Off-road trips through mountain valleys.', 'order': 4,
+            },
+            {
+                'name': 'Nature', 'name_kg': 'Жаратылыш', 'name_ru': 'Природа',
+                'slug': 'nature', 'icon': 'Leaf', 'description': 'Nature, wildlife, and quiet scenic places.', 'order': 5,
             },
         ]
 
@@ -372,4 +393,184 @@ class Command(BaseCommand):
                 faq.is_active = True
                 faq.save()
 
-        self.stdout.write(self.style.SUCCESS('Demo data seeded successfully.'))
+        # Fill the remaining public catalog tables with repeatable sample content.
+        locations_data = [
+            ('burana-tower', 'Burana Tower', 'Бурана мунарасы', 'Башня Бурана', 'chuy', 'cultural', '42.7464', '75.2505', 900, 'Historic minaret and archaeological site near Tokmok.'),
+            ('jeti-oguz', 'Jeti-Oguz Gorge', 'Жети-Өгүз капчыгайы', 'Ущелье Джети-Огуз', 'issyk-kul', 'trekking', '42.3420', '78.2380', 2200, 'Red sandstone cliffs and mountain trails south of Issyk-Kul.'),
+            ('tash-rabat', 'Tash Rabat Caravanserai', 'Таш-Рабат кербен сарайы', 'Караван-сарай Таш-Рабат', 'naryn', 'cultural', '40.8300', '75.3000', 3200, 'Stone caravanserai on a historic route through the Tian Shan.'),
+            ('sulaiman-too', 'Sulaiman-Too', 'Сулайман-Тоо', 'Сулайман-Тоо', 'osh', 'cultural', '40.5283', '72.7985', 1110, 'Sacred mountain and UNESCO-listed landmark in Osh.'),
+            ('arslanbob-forest', 'Arslanbob Walnut Forest', 'Арстанбап жаңгак токою', 'Ореховый лес Арсланбоб', 'jalal-abad', 'trekking', '41.3370', '72.9300', 1700, 'Mountain village and extensive natural walnut forest.'),
+            ('manas-orordo', 'Manas Ordo', 'Манас Ордо', 'Манас Ордо', 'talas', 'cultural', '42.5170', '72.2420', 1300, 'Cultural complex dedicated to the Kyrgyz Manas epic.'),
+            ('aigul-tash', 'Aigul-Tash', 'Айгүл-Таш', 'Айгуль-Таш', 'batken', 'nature', '39.9870', '70.9700', 1100, 'Mountain landscape near Batken known for its rare Aigul flower.'),
+        ]
+        location_map = {}
+        for slug, name, name_kg, name_ru, region_slug, category_slug, lat, lon, elevation, description in locations_data:
+            location, _ = Location.objects.update_or_create(
+                slug=slug,
+                defaults={
+                    'name': name, 'name_kg': name_kg, 'name_ru': name_ru,
+                    'region': region_map[region_slug], 'category': category_map.get(category_slug),
+                    'short_description': description, 'description': description,
+                    'latitude': lat, 'longitude': lon, 'elevation': elevation,
+                    'difficulty': 'easy', 'best_season': 'May-October',
+                    'is_featured': slug in {'jeti-oguz', 'tash-rabat', 'sulaiman-too'}, 'is_active': True,
+                },
+            )
+            location_map[slug] = location
+
+        tags = {}
+        for name, name_kg, name_ru, color in [
+            ('Mountains', 'Тоолор', 'Горы', '#5B7C62'),
+            ('Culture', 'Маданият', 'Культура', '#B56B45'),
+            ('Nature', 'Жаратылыш', 'Природа', '#4F8068'),
+            ('Family', 'Үй-бүлө', 'Для семьи', '#C18B45'),
+        ]:
+            tag, _ = DestinationTag.objects.update_or_create(
+                name=name,
+                defaults={'name_kg': name_kg, 'name_ru': name_ru, 'color': color},
+            )
+            tags[name] = tag
+
+        tag_assignments = {
+            'lake-issyk-kul': ['Nature', 'Family'],
+            'song-kol': ['Mountains', 'Nature'],
+            'ala-archa-gorge': ['Mountains', 'Nature'],
+            'osh-bazaar': ['Culture'],
+        }
+        for slug, tag_names in tag_assignments.items():
+            destination = Destination.objects.get(slug=slug)
+            for tag_name in tag_names:
+                DestinationTagRelation.objects.get_or_create(destination=destination, tag=tags[tag_name])
+
+        itineraries_data = [
+            {
+                'slug': 'week-in-the-tian-shan', 'title': 'A Week in the Tian Shan',
+                'title_kg': 'Теңир-Тоодо бир апта', 'title_ru': 'Неделя в Тянь-Шане',
+                'short_description': 'A sample seven-day route linking mountain scenery and cultural stops.',
+                'description': 'Start in Bishkek, hike in Ala-Archa, visit Issyk-Kul, and finish with a night near Song-Kol.',
+                'duration_days': 7, 'difficulty': 'moderate', 'regions': ['chuy', 'issyk-kul', 'naryn'],
+                'categories': ['trekking', 'cultural'], 'tour': 'ala-archa-weekend-escape',
+                'price_from': '850.00', 'highlights': ['Ala-Archa hiking', 'Issyk-Kul shoreline', 'Song-Kol high pastures'],
+                'days': [
+                    ('Bishkek arrival', 'Meet in Bishkek and prepare for the mountain route.', ['City walk', 'Trip briefing']),
+                    ('Ala-Archa National Park', 'Spend the day on a mountain trail in the gorge.', ['Hiking', 'Picnic']),
+                    ('Burana and Issyk-Kul', 'Visit the Burana archaeological site before driving to the lake.', ['History', 'Lake shore']),
+                    ('Issyk-Kul villages', 'Explore the north shore and nearby villages.', ['Local visit', 'Scenic drive']),
+                    ('Journey to Song-Kol', 'Travel up to the high pasture and settle into a yurt camp.', ['Mountain drive', 'Yurt stay']),
+                    ('Song-Kol', 'Enjoy a flexible day by the lake and pasture.', ['Walk', 'Horse riding']),
+                    ('Return to Bishkek', 'Drive back to the capital.', ['Scenic drive']),
+                ],
+            },
+            {
+                'slug': 'southern-heritage-route', 'title': 'Southern Heritage Route',
+                'title_kg': 'Түштүк мурас жолу', 'title_ru': 'Маршрут наследия юга',
+                'short_description': 'A sample five-day route through Osh, Batken, and Jalal-Abad regions.',
+                'description': 'Discover southern Kyrgyzstan through mountain scenery, historic sites, and village visits.',
+                'duration_days': 5, 'difficulty': 'easy', 'regions': ['osh', 'batken', 'jalal-abad'],
+                'categories': ['cultural', 'jeep'], 'tour': 'issyk-kul-beach-wellness',
+                'price_from': '620.00', 'highlights': ['Sulaiman-Too', 'Aigul-Tash area', 'Arslanbob forest'],
+                'days': [
+                    ('Osh', 'Explore the old city and Sulaiman-Too.', ['City walk', 'Historic site']),
+                    ('Batken', 'Travel west through the southern valley landscapes.', ['Scenic drive', 'Local market']),
+                    ('Aigul-Tash area', 'Visit the mountain landscape around Batken.', ['Nature walk', 'Photography']),
+                    ('Arslanbob', 'Travel to the walnut forest region.', ['Village visit', 'Forest walk']),
+                    ('Return journey', 'Finish the route with a flexible departure day.', ['Transfer']),
+                ],
+            },
+        ]
+        for item in itineraries_data:
+            itinerary, _ = Itinerary.objects.update_or_create(
+                slug=item['slug'],
+                defaults={
+                    'title': item['title'], 'title_kg': item['title_kg'], 'title_ru': item['title_ru'],
+                    'short_description': item['short_description'], 'description': item['description'],
+                    'duration_days': item['duration_days'], 'difficulty': item['difficulty'],
+                    'price_from': item['price_from'], 'currency': 'USD',
+                    'highlights': item['highlights'], 'day_by_day': [
+                        {'day': index, 'title': day[0], 'description': day[1], 'activities': day[2]}
+                        for index, day in enumerate(item['days'], start=1)
+                    ],
+                    'included': ['Ground transport', 'Local guide'],
+                    'not_included': ['International flights', 'Personal expenses'],
+                    'is_featured': item['slug'] == 'week-in-the-tian-shan', 'is_active': True,
+                    'order': 1 if item['slug'] == 'week-in-the-tian-shan' else 2,
+                },
+            )
+            itinerary.regions.set(region_map[slug] for slug in item['regions'])
+            itinerary.categories.set(category_map[slug] for slug in item['categories'])
+            itinerary.tours.set([Tour.objects.get(slug=item['tour'])])
+            for day_number, (title, description, activities) in enumerate(item['days'], start=1):
+                ItineraryDay.objects.update_or_create(
+                    itinerary=itinerary,
+                    day_number=day_number,
+                    defaults={
+                        'title': title, 'title_ru': title, 'title_kg': title,
+                        'description': description, 'activities': activities,
+                        'accommodation': 'Local guesthouse or yurt camp',
+                        'meals': [],
+                    },
+                )
+
+        guide, _ = Guide.objects.update_or_create(
+            slug='sample-local-guide',
+            defaults={
+                'first_name': 'Sample', 'last_name': 'Guide',
+                'bio': 'Sample catalogue entry. Replace this profile with a real guide before launch.',
+                'bio_ru': 'Демонстрационная запись. Перед запуском замените её профилем реального гида.',
+                'specializations': ['trekking', 'cultural'], 'languages': ['en', 'ru', 'kg'],
+                'experience_years': 0, 'certification': '', 'rating': 0, 'reviews_count': 0,
+                'price_per_day': '0.00', 'currency': 'USD', 'is_verified': False,
+                'is_active': True, 'is_featured': False,
+            },
+        )
+        guide.regions.set(region_map.values())
+
+        vehicle, _ = Vehicle.objects.update_or_create(
+            slug='sample-4x4',
+            defaults={
+                'name': 'Sample 4x4 vehicle', 'vehicle_type': 'suv',
+                'brand': 'Sample', 'model': '4x4', 'seats': 4,
+                'fuel_type': 'diesel', 'has_ac': True, 'has_4wd': True,
+                'description': 'Sample catalogue entry. Replace with a real vehicle and verified rates before launch.',
+                'price_per_day': '0.00', 'price_per_km': '0.00', 'currency': 'USD',
+                'includes_driver': True, 'driver_languages': ['en', 'ru'],
+                'is_available': True, 'is_active': True,
+            },
+        )
+        vehicle.regions.set(region_map.values())
+
+        YurtCamp.objects.update_or_create(
+            slug='sample-yurt-camp',
+            defaults={
+                'name': 'Sample yurt camp', 'name_kg': 'Үлгү боз үй лагери', 'name_ru': 'Пример юрточного лагеря',
+                'short_description': 'Sample catalogue entry; replace with a verified camp listing.',
+                'description': 'Demonstration record only. Confirm amenities, contacts, and prices before publishing.',
+                'region': region_map['naryn'], 'latitude': '41.870000', 'longitude': '75.250000',
+                'elevation': 3016, 'accommodation_type': 'traditional', 'capacity': 4, 'yurts_count': 1,
+                'has_shared_bathroom': True, 'has_electricity': False,
+                'price_per_night': '0.00', 'currency': 'USD',
+                'meals_included': [], 'activities_offered': ['Horse riding', 'Lake walks'],
+                'best_season': 'July-August', 'is_cbt': True, 'rating': 0, 'reviews_count': 0,
+                'is_featured': False, 'is_active': True, 'order': 1,
+            },
+        )
+
+        event_start = timezone.now() + timedelta(days=60)
+        Event.objects.update_or_create(
+            slug='sample-cultural-event',
+            defaults={
+                'title': 'Sample cultural event', 'title_kg': 'Үлгү маданий иш-чара',
+                'title_ru': 'Пример культурного события',
+                'short_description': 'Sample event record. Replace with a confirmed event and date before launch.',
+                'description': 'Demonstration record only; this is not a real event announcement.',
+                'event_type': 'cultural', 'region': region_map['chuy'], 'location': 'Bishkek area',
+                'start_date': event_start, 'end_date': event_start + timedelta(days=1),
+                'is_recurring': False, 'is_free': True, 'organizer': 'Sample listing',
+                'tags': ['sample'], 'is_featured': False, 'is_active': True, 'is_published': True,
+            },
+        )
+
+        self.stdout.write(self.style.SUCCESS(
+            'Demo catalog data seeded. Replace sample service and event entries before launch. '
+            'Booking, payment, and visitor review tables are intentionally left empty.'
+        ))
